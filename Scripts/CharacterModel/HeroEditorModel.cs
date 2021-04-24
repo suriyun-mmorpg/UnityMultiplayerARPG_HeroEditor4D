@@ -1,5 +1,6 @@
 ﻿using Assets.HeroEditor4D.Common.CharacterScripts;
 using HeroEditor.Common;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,6 +10,21 @@ namespace MultiplayerARPG.HeroEditor4D
     [RequireComponent(typeof(Character4D))]
     public class HeroEditorModel : BaseCharacterModel
     {
+        // Clip name variables
+        // Idle
+        public const string CLIP_IDLE = "__Idle";
+        public const string CLIP_MOVE = "__Move";
+        public const string CLIP_SPRINT = "__Sprint";
+        public const string CLIP_DEAD = "__Dead";
+        public const string CLIP_ACTION = "__Action";
+        public const string CLIP_CAST_SKILL = "__CastSkill";
+        // Animator variables
+        public static readonly int ANIM_IS_DEAD = Animator.StringToHash("IsDead");
+        public static readonly int ANIM_MOVE_SPEED = Animator.StringToHash("MoveSpeed");
+        public static readonly int ANIM_DO_ACTION = Animator.StringToHash("DoAction");
+        public static readonly int ANIM_IS_CASTING_SKILL = Animator.StringToHash("IsCastingSkill");
+        public static readonly int ANIM_MOVE_CLIP_MULTIPLIER = Animator.StringToHash("MoveSpeedMultiplier");
+        public static readonly int ANIM_ACTION_CLIP_MULTIPLIER = Animator.StringToHash("ActionSpeedMultiplier");
 
         public const List<Sprite> EmptySprites = null;
         public const Sprite EmptySprite = null;
@@ -22,10 +38,47 @@ namespace MultiplayerARPG.HeroEditor4D
         private Character4D character4D;
         private HashSet<EHeroEditorItemPart> equippedParts = new HashSet<EHeroEditorItemPart>();
 
+        [Header("Relates Components")]
+        [Tooltip("It will find `Animator` component on automatically if this is NULL")]
+        public Animator animator;
+        [Tooltip("You can set this when animator controller type is `Custom`")]
+        public RuntimeAnimatorController animatorController;
+        public AnimatorOverrideController CacheAnimatorController { get; private set; }
+
+        // Private state validater
+        private bool isSetupComponent;
+
         protected override void Awake()
         {
             base.Awake();
             character4D = GetComponent<Character4D>();
+            SetupComponent();
+        }
+
+        private void SetupComponent()
+        {
+            if (isSetupComponent)
+                return;
+            isSetupComponent = true;
+            if (CacheAnimatorController == null)
+                CacheAnimatorController = new AnimatorOverrideController(animatorController);
+            // Use override controller as animator
+            if (animator != null && animator.runtimeAnimatorController != CacheAnimatorController)
+                animator.runtimeAnimatorController = CacheAnimatorController;
+            SetDefaultAnimations();
+        }
+
+        public override void SetDefaultAnimations()
+        {
+            // Set default clips
+            if (CacheAnimatorController != null)
+            {
+                CacheAnimatorController[CLIP_IDLE] = defaultAnimations.idleClip;
+                CacheAnimatorController[CLIP_MOVE] = defaultAnimations.moveClip;
+                CacheAnimatorController[CLIP_SPRINT] = defaultAnimations.sprintClip;
+                CacheAnimatorController[CLIP_DEAD] = defaultAnimations.deadClip;
+            }
+            base.SetDefaultAnimations();
         }
 
         public override void SetEquipWeapons(EquipWeapons equipWeapons)
@@ -213,6 +266,48 @@ namespace MultiplayerARPG.HeroEditor4D
             return CacheAnimationsManager.SetAndTryGetCacheSkillAnimations(CacheIdentity.HashAssetId, weaponAnimations, skillAnimations, dataId, out anims);
         }
 
+        private ActionAnimation GetActionAnimation(AnimActionType animActionType, int dataId)
+        {
+            ActionAnimation animation = defaultAnimations.attackAnimation;
+            HeroEditorWeaponAnimation weaponAnimations;
+            HeroEditorSkillAnimation skillAnimations;
+            switch (animActionType)
+            {
+                case AnimActionType.AttackRightHand:
+                    if (!TryGetWeaponAnimations(dataId, out weaponAnimations))
+                        animation = defaultAnimations.attackAnimation;
+                    else
+                        animation = weaponAnimations.rightHandAttackAnimation;
+                    break;
+                case AnimActionType.AttackLeftHand:
+                    if (!TryGetWeaponAnimations(dataId, out weaponAnimations))
+                        animation = defaultAnimations.attackAnimation;
+                    else
+                        animation = weaponAnimations.leftHandAttackAnimation;
+                    break;
+                case AnimActionType.SkillRightHand:
+                case AnimActionType.SkillLeftHand:
+                    if (!TryGetSkillAnimations(dataId, out skillAnimations))
+                        animation = defaultAnimations.skillActivateAnimation;
+                    else
+                        animation = skillAnimations.activateAnimation;
+                    break;
+                case AnimActionType.ReloadRightHand:
+                    if (!TryGetWeaponAnimations(dataId, out weaponAnimations))
+                        animation = defaultAnimations.reloadAnimation;
+                    else
+                        animation = weaponAnimations.rightHandReloadAnimation;
+                    break;
+                case AnimActionType.ReloadLeftHand:
+                    if (!TryGetWeaponAnimations(dataId, out weaponAnimations))
+                        animation = defaultAnimations.reloadAnimation;
+                    else
+                        animation = weaponAnimations.leftHandReloadAnimation;
+                    break;
+            }
+            return animation;
+        }
+
         public override bool GetLeftHandAttackAnimation(int dataId, int animationIndex, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
         {
             ActionAnimation animation = defaultAnimations.attackAnimation;
@@ -305,14 +400,53 @@ namespace MultiplayerARPG.HeroEditor4D
             return true;
         }
 
-        public override Coroutine PlayActionAnimation(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier = 1)
+        public override Coroutine PlayActionAnimation(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier = 1f)
         {
-            throw new System.NotImplementedException();
+            return StartCoroutine(PlayActionAnimation_Animator(animActionType, dataId, index, playSpeedMultiplier));
+        }
+
+        private IEnumerator PlayActionAnimation_Animator(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier)
+        {
+            // If animator is not null, play the action animation
+            ActionAnimation animation = GetActionAnimation(animActionType, dataId);
+            // Action
+            CacheAnimatorController[CLIP_ACTION] = animation.clip;
+            yield return 0;
+            AudioManager.PlaySfxClipAtAudioSource(animation.GetRandomAudioClip(), genericAudioSource);
+            animator.SetFloat(ANIM_ACTION_CLIP_MULTIPLIER, playSpeedMultiplier);
+            animator.SetBool(ANIM_DO_ACTION, true);
+            animator.Play(0, 0, 0f);
+            // Waits by current transition + clip duration before end animation
+            yield return new WaitForSecondsRealtime(animation.GetClipLength() / playSpeedMultiplier);
+            animator.SetBool(ANIM_DO_ACTION, false);
+            // Waits by current transition + extra duration before end playing animation state
+            yield return new WaitForSecondsRealtime(animation.GetExtraDuration() / playSpeedMultiplier);
         }
 
         public override Coroutine PlaySkillCastClip(int dataId, float duration)
         {
-            throw new System.NotImplementedException();
+            return StartCoroutine(PlaySkillCastClip_Animator(dataId, duration));
+        }
+
+        private IEnumerator PlaySkillCastClip_Animator(int dataId, float duration)
+        {
+            AnimationClip clip;
+            HeroEditorSkillAnimation skillAnimations;
+            if (!TryGetSkillAnimations(dataId, out skillAnimations))
+                clip = defaultAnimations.skillCastClip;
+            else
+                clip = skillAnimations.castClip;
+
+            if (clip != null)
+            {
+                // Cast Skill
+                CacheAnimatorController[CLIP_CAST_SKILL] = clip;
+                yield return 0;
+                animator.SetBool(ANIM_IS_CASTING_SKILL, true);
+                animator.Play(0, 0, 0f);
+                yield return new WaitForSecondsRealtime(duration);
+                animator.SetBool(ANIM_IS_CASTING_SKILL, false);
+            }
         }
 
         public override void PlayWeaponChargeClip(int dataId, bool isLeftHand)
@@ -322,12 +456,12 @@ namespace MultiplayerARPG.HeroEditor4D
 
         public override void StopActionAnimation()
         {
-            throw new System.NotImplementedException();
+            animator.SetBool(ANIM_DO_ACTION, false);
         }
 
         public override void StopSkillCastAnimation()
         {
-            throw new System.NotImplementedException();
+            animator.SetBool(ANIM_IS_CASTING_SKILL, false);
         }
 
         public override void StopWeaponChargeAnimation()
