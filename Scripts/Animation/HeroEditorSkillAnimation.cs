@@ -7,7 +7,6 @@
         public SkillActivateAnimationType activateAnimationType;
         [StringShowConditional(nameof(activateAnimationType), nameof(SkillActivateAnimationType.UseActivateAnimation))]
         public HeroEditorActionAnimation activateAnimation;
-        public bool isTwoHanded;
         public BaseSkill Data { get { return skill; } }
     }
 }

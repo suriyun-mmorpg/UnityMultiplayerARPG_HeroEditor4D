@@ -8,8 +8,6 @@
         public HeroEditorActionAnimation leftHandAttackAnimation;
         public HeroEditorActionAnimation rightHandReloadAnimation;
         public HeroEditorActionAnimation leftHandReloadAnimation;
-        public bool isTwoHanded;
-        public int weaponTypeNum;
         public WeaponType Data { get { return weaponType; } }
     }
 }
