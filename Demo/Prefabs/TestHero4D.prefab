@@ -3830,6 +3830,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1700554214410280871}
   - component: {fileID: 1593161641987053707}
+  - component: {fileID: 4053770931527195307}
   - component: {fileID: 1594182866908098701}
   - component: {fileID: 1646966583657242129}
   - component: {fileID: 1541898274171299763}
@@ -3841,6 +3842,8 @@ GameObject:
   - component: {fileID: 2735954736552453947}
   - component: {fileID: 7957775958028234817}
   - component: {fileID: 4176351135039353152}
+  - component: {fileID: 645946918321546352}
+  - component: {fileID: 4043545223591096146}
   m_Layer: 0
   m_Name: TestHero4D
   m_TagString: Untagged
@@ -3857,7 +3860,7 @@ Transform:
   m_GameObject: {fileID: 1696183408843864473}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 8878714965383952224}
   - {fileID: 635177144301704673}
@@ -3865,6 +3868,7 @@ Transform:
   - {fileID: 7766816905890533645}
   - {fileID: 3801425485647208540}
   - {fileID: 7870644620790268547}
+  - {fileID: 5800839905575599650}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3897,6 +3901,18 @@ MonoBehaviour:
   - {fileID: 3521723448222396196}
   Animator: {fileID: 1646966583657242129}
   AnimationManager: {fileID: 0}
+--- !u!114 &4053770931527195307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696183408843864473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a219f3f28a3014ca16bf6b2f13111f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1594182866908098701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4140,44 +4156,33 @@ MonoBehaviour:
   activateInstantiatedObject: 0
   spriteCollection: {fileID: 11400000, guid: e06b2900f9ca1ec499ddfcebf28fa714, type: 2}
   defaultAnimations:
-    idleClip: {fileID: 0}
-    moveClip: {fileID: 0}
-    sprintClip: {fileID: 0}
-    deadClip: {fileID: 0}
     attackAnimation:
-      clip: {fileID: 0}
-      playClipAllLayers: 0
+      triggerName: 0
+      clipLength: 0.667
       animSpeedRate: 0
       triggerDurationRate: 0
       multiHitTriggerDurationRates: []
-      durationType: 0
-      fixDurationValue: 0
       extraDuration: 0
       audioClips: []
-    skillCastClip: {fileID: 0}
     skillActivateAnimation:
-      clip: {fileID: 0}
-      playClipAllLayers: 0
+      triggerName: 0
+      clipLength: 0.667
       animSpeedRate: 0
       triggerDurationRate: 0
       multiHitTriggerDurationRates: []
-      durationType: 0
-      fixDurationValue: 0
       extraDuration: 0
       audioClips: []
     reloadAnimation:
-      clip: {fileID: 0}
-      playClipAllLayers: 0
+      triggerName: 0
+      clipLength: 0.667
       animSpeedRate: 0
       triggerDurationRate: 0
       multiHitTriggerDurationRates: []
-      durationType: 0
-      fixDurationValue: 0
       extraDuration: 0
       audioClips: []
+  weaponAnimations: []
   skillAnimations: []
   animator: {fileID: 1646966583657242129}
-  animatorController: {fileID: 0}
 --- !u!114 &5964558539929722273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4248,7 +4253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56367cc2ed44f1e49835e9c247771fd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  assetId: 9a1f5830054370a46b5a76e6e2f7a725
+  assetId: 
   objectId: 0
   visibleRange: 0
   alwaysVisible: 0
@@ -4380,8 +4385,8 @@ MonoBehaviour:
     value: 0
   meleeDamageTransform: {fileID: 7870644620790268547}
   missileDamageTransform: {fileID: 7870644620790268547}
-  characterUiTransform: {fileID: 7870644620790268547}
-  miniMapUiTransform: {fileID: 7870644620790268547}
+  characterUiTransform: {fileID: 5800839905575599650}
+  miniMapUiTransform: {fileID: 5800839905575599650}
   debugFovColor: {r: 0, g: 1, b: 0, a: 0.04}
   race: {fileID: 0}
   onDead:
@@ -4732,6 +4737,49 @@ MonoBehaviour:
     dataChannel: 0
     forOwnerOnly: 1
   writeAddonLog: 0
+--- !u!50 &645946918321546352
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696183408843864473}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &4043545223591096146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696183408843864473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0d7dfc5b7cb2c04cac88f6f134fbd32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviourIndex: 0
+  dataChannel: 0
+  sendOptions: 0
+  sendInterval: 0.1
+  stoppingDistance: 0.1
+  moveThreshold: 0.01
+  snapThreshold: 5
+  clientSyncTransformInterval: 0.05
+  clientSendInputsInterval: 0.05
+  serverSyncTransformInterval: 0.05
 --- !u!1 &1696198124242259737
 GameObject:
   m_ObjectHideFlags: 0
@@ -15339,6 +15387,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpriteName: Left
   SpriteNameFallback: []
+--- !u!1 &7372088445463179000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5800839905575599650}
+  m_Layer: 0
+  m_Name: UITransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5800839905575599650
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7372088445463179000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1700554214410280871}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7388106436444704619
 GameObject:
   m_ObjectHideFlags: 0
