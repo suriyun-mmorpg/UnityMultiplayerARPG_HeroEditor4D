@@ -9,9 +9,16 @@ namespace MultiplayerARPG.HeroEditor4D
     [RequireComponent(typeof(Character4D))]
     public class HeroEditorModel : BaseCharacterModel
     {
+
         public const List<Sprite> EmptySprites = null;
         public const Sprite EmptySprite = null;
         public SpriteCollection spriteCollection;
+        [Header("Animations")]
+        public HeroEditorAnimations defaultAnimations;
+        [ArrayElementTitle("weaponType")]
+        public HeroEditorWeaponAnimation[] weaponAnimations;
+        [ArrayElementTitle("skill")]
+        public HeroEditorSkillAnimation[] skillAnimations;
         private Character4D character4D;
         private HashSet<EHeroEditorItemPart> equippedParts = new HashSet<EHeroEditorItemPart>();
 
@@ -196,34 +203,90 @@ namespace MultiplayerARPG.HeroEditor4D
             }
         }
 
+        public bool TryGetWeaponAnimations(int dataId, out HeroEditorWeaponAnimation anims)
+        {
+            return CacheAnimationsManager.SetAndTryGetCacheWeaponAnimations(CacheIdentity.HashAssetId, weaponAnimations, skillAnimations, dataId, out anims);
+        }
+
+        public bool TryGetSkillAnimations(int dataId, out HeroEditorSkillAnimation anims)
+        {
+            return CacheAnimationsManager.SetAndTryGetCacheSkillAnimations(CacheIdentity.HashAssetId, weaponAnimations, skillAnimations, dataId, out anims);
+        }
+
         public override bool GetLeftHandAttackAnimation(int dataId, int animationIndex, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override bool GetLeftHandReloadAnimation(int dataId, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override bool GetRandomLeftHandAttackAnimation(int dataId, out int animationIndex, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override bool GetRandomRightHandAttackAnimation(int dataId, out int animationIndex, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
-        {
-            throw new System.NotImplementedException();
+            ActionAnimation animation = defaultAnimations.attackAnimation;
+            HeroEditorWeaponAnimation weaponAnims;
+            if (TryGetWeaponAnimations(dataId, out weaponAnims))
+                animation = weaponAnims.leftHandAttackAnimation;
+            animSpeedRate = 1f;
+            triggerDurations = new float[] { 0f };
+            totalDuration = 0f;
+            AnimationClip clip = animation.clip;
+            if (clip == null) return false;
+            triggerDurations = animation.GetTriggerDurations();
+            totalDuration = animation.GetTotalDuration();
+            return true;
         }
 
         public override bool GetRightHandAttackAnimation(int dataId, int animationIndex, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
         {
-            throw new System.NotImplementedException();
+            ActionAnimation animation = defaultAnimations.attackAnimation;
+            HeroEditorWeaponAnimation weaponAnims;
+            if (TryGetWeaponAnimations(dataId, out weaponAnims))
+                animation = weaponAnims.rightHandAttackAnimation;
+            animSpeedRate = 1f;
+            triggerDurations = new float[] { 0f };
+            totalDuration = 0f;
+            AnimationClip clip = animation.clip;
+            if (clip == null) return false;
+            triggerDurations = animation.GetTriggerDurations();
+            totalDuration = animation.GetTotalDuration();
+            return true;
+        }
+
+        public override bool GetLeftHandReloadAnimation(int dataId, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
+        {
+            ActionAnimation animation = defaultAnimations.reloadAnimation;
+            HeroEditorWeaponAnimation weaponAnims;
+            if (TryGetWeaponAnimations(dataId, out weaponAnims))
+                animation = weaponAnims.leftHandReloadAnimation;
+            animSpeedRate = 1f;
+            triggerDurations = new float[] { 0f };
+            totalDuration = 0f;
+            AnimationClip clip = animation.clip;
+            if (clip == null) return false;
+            triggerDurations = animation.GetTriggerDurations();
+            totalDuration = animation.GetTotalDuration();
+            return true;
         }
 
         public override bool GetRightHandReloadAnimation(int dataId, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
         {
-            throw new System.NotImplementedException();
+            ActionAnimation animation = defaultAnimations.reloadAnimation;
+            HeroEditorWeaponAnimation weaponAnims;
+            if (TryGetWeaponAnimations(dataId, out weaponAnims))
+                animation = weaponAnims.rightHandReloadAnimation;
+            animSpeedRate = 1f;
+            triggerDurations = new float[] { 0f };
+            totalDuration = 0f;
+            AnimationClip clip = animation.clip;
+            if (clip == null) return false;
+            triggerDurations = animation.GetTriggerDurations();
+            totalDuration = animation.GetTotalDuration();
+            return true;
+        }
+
+        public override bool GetRandomLeftHandAttackAnimation(int dataId, out int animationIndex, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
+        {
+            animationIndex = 0;
+            return GetLeftHandAttackAnimation(dataId, animationIndex, out animSpeedRate, out triggerDurations, out totalDuration);
+        }
+
+        public override bool GetRandomRightHandAttackAnimation(int dataId, out int animationIndex, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
+        {
+            animationIndex = 0;
+            return GetRightHandAttackAnimation(dataId, animationIndex, out animSpeedRate, out triggerDurations, out totalDuration);
         }
 
         public override bool GetSkillActivateAnimation(int dataId, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
@@ -236,11 +299,6 @@ namespace MultiplayerARPG.HeroEditor4D
             throw new System.NotImplementedException();
         }
 
-        public override void PlayMoveAnimation()
-        {
-            throw new System.NotImplementedException();
-        }
-
         public override Coroutine PlaySkillCastClip(int dataId, float duration)
         {
             throw new System.NotImplementedException();
@@ -248,7 +306,7 @@ namespace MultiplayerARPG.HeroEditor4D
 
         public override void PlayWeaponChargeClip(int dataId, bool isLeftHand)
         {
-            throw new System.NotImplementedException();
+            // TODO: May implement pulling animation for 2D models
         }
 
         public override void StopActionAnimation()
@@ -263,12 +321,20 @@ namespace MultiplayerARPG.HeroEditor4D
 
         public override void StopWeaponChargeAnimation()
         {
+            // TODO: May implement pulling animation for 2D models
+        }
+
+        public override void PlayMoveAnimation()
+        {
             throw new System.NotImplementedException();
         }
 
         public override SkillActivateAnimationType UseSkillActivateAnimationType(int dataId)
         {
-            throw new System.NotImplementedException();
+            HeroEditorSkillAnimation anims;
+            if (!TryGetSkillAnimations(dataId, out anims))
+                return SkillActivateAnimationType.UseActivateAnimation;
+            return anims.activateAnimationType;
         }
     }
 }
