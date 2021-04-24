@@ -17,7 +17,7 @@ namespace MultiplayerARPG.HeroEditor4D
         public static readonly int ANIM_STATE = Animator.StringToHash("State");
         public static readonly int ANIM_ACTION = Animator.StringToHash("Action");
         public static readonly int ANIM_TWO_HANDED = Animator.StringToHash("TwoHanded");
-        public static readonly int ANIM_SPEED_MULTIPLIER = Animator.StringToHash("Speed");
+        public static readonly int ANIM_SPEED = Animator.StringToHash("Speed");
         public static readonly int ANIM_WEAPON_TYPE = Animator.StringToHash("WeaponType");
 
         public enum StateTypes
@@ -381,14 +381,15 @@ namespace MultiplayerARPG.HeroEditor4D
 
         public override Coroutine PlayActionAnimation(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier = 1f)
         {
-            return StartCoroutine(PlayHeroEditorActionAnimation_Animator(animActionType, dataId, index, playSpeedMultiplier));
+            return StartCoroutine(PlayActionAnimation_Animator(animActionType, dataId, index, playSpeedMultiplier));
         }
 
-        private IEnumerator PlayHeroEditorActionAnimation_Animator(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier)
+        private IEnumerator PlayActionAnimation_Animator(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier)
         {
             // If animator is not null, play the action animation
             HeroEditorActionAnimation animation = GetHeroEditorActionAnimation(animActionType, dataId);
             // Action
+            animator.SetFloat(ANIM_SPEED, playSpeedMultiplier);
             animator.SetTrigger(animation.GetTriggerName());
             AudioManager.PlaySfxClipAtAudioSource(animation.GetRandomAudioClip(), genericAudioSource);
             // Waits by current transition + clip duration before end animation
@@ -423,7 +424,7 @@ namespace MultiplayerARPG.HeroEditor4D
         public override void StopSkillCastAnimation()
         {
             animator.SetBool(ANIM_ACTION, false);
-            animator.SetInteger(ANIM_STATE, (int)StateTypes.Idle);
+            isCasting = false;
         }
 
         public override void StopWeaponChargeAnimation()
