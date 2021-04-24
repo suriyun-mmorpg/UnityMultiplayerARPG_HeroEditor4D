@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 446bd54be72e9c14a9d92aae35e50af7, type: 3}
-  m_Name: Character4DDemo
+  m_Name: Hero4DDemo
   m_EditorClassIdentifier: 
-  playerCharacterEntities: []
+  playerCharacterEntities:
+  - {fileID: 4176351135039353152, guid: e63c600ccd014994481b83fd8c2334e4, type: 3}
   monsterCharacterEntities: []
   vehicleEntities: []
   attributes: []
@@ -28,6 +29,8 @@ MonoBehaviour:
   playerCharacters: []
   monsterCharacters: []
   harvestables: []
-  mapInfos: []
+  mapInfos:
+  - {fileID: 11400000, guid: 904437e0c8f12224daf6ba1f6dad1911, type: 2}
+  - {fileID: 11400000, guid: 9b9d07cb5b6f35b42a9507f397bdc7fc, type: 2}
   quests: []
   factions: []

@@ -3842,7 +3842,7 @@ GameObject:
   - component: {fileID: 7957775958028234817}
   - component: {fileID: 4176351135039353152}
   m_Layer: 0
-  m_Name: Human
+  m_Name: TestHero4D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
