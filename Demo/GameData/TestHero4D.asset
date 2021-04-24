@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b67f350c4283834f81cded3a656ff5e, type: 3}
+  m_Name: Hero4D
+  m_EditorClassIdentifier: 
+  id: 
+  title: 
+  titles: []
+  description: 
+  descriptions: []
+  category: 
+  icon: {fileID: 0}
+  stats:
+    baseStats:
+      hp: 0
+      mp: 0
+      accuracy: 0
+      evasion: 0
+      criRate: 0
+      criDmgRate: 0
+      blockRate: 0
+      blockDmgRate: 0
+      moveSpeed: 0
+      atkSpeed: 0
+      weightLimit: 0
+      slotLimit: 0
+      stamina: 0
+      food: 0
+      water: 0
+      testStats: 0
+    statsIncreaseEachLevel:
+      hp: 0
+      mp: 0
+      accuracy: 0
+      evasion: 0
+      criRate: 0
+      criDmgRate: 0
+      blockRate: 0
+      blockDmgRate: 0
+      moveSpeed: 0
+      atkSpeed: 0
+      weightLimit: 0
+      slotLimit: 0
+      stamina: 0
+      food: 0
+      water: 0
+      testStats: 0
+  attributes: []
+  resistances: []
+  armors: []
+  skillLevels: []
+  rightHandEquipItem: {fileID: 0}
+  leftHandEquipItem: {fileID: 0}
+  armorItems: []
+  startItems: []
+  startMap: {fileID: 0}
+  useOverrideStartPosition: 0
+  overrideStartPosition: {x: 0, y: 0, z: 0}
