@@ -22,5 +22,6 @@
         Makeup,
         Mask,
         Earrings,
+        Count
     }
 }
