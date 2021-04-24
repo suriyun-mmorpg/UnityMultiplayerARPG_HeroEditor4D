@@ -291,7 +291,18 @@ namespace MultiplayerARPG.HeroEditor4D
 
         public override bool GetSkillActivateAnimation(int dataId, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
         {
-            throw new System.NotImplementedException();
+            ActionAnimation animation2D = defaultAnimations.skillActivateAnimation;
+            HeroEditorSkillAnimation skillAnims;
+            if (TryGetSkillAnimations(dataId, out skillAnims))
+                animation2D = skillAnims.activateAnimation;
+            animSpeedRate = 1f;
+            triggerDurations = new float[] { 0f };
+            totalDuration = 0f;
+            AnimationClip clip = animation2D.clip;
+            if (clip == null) return false;
+            triggerDurations = animation2D.GetTriggerDurations();
+            totalDuration = animation2D.GetTotalDuration();
+            return true;
         }
 
         public override Coroutine PlayActionAnimation(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier = 1)
