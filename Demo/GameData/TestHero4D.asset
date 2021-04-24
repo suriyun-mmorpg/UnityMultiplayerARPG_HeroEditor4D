@@ -22,7 +22,7 @@ MonoBehaviour:
   stats:
     baseStats:
       hp: 100
-      mp: 0
+      mp: 100
       accuracy: 0
       evasion: 0
       criRate: 0
