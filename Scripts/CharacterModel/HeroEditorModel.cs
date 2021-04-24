@@ -3,6 +3,9 @@ using HeroEditor.Common;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace MultiplayerARPG.HeroEditor4D
@@ -52,7 +55,40 @@ namespace MultiplayerARPG.HeroEditor4D
         {
             base.Awake();
             Character4D = GetComponent<Character4D>();
+            Character4D.SetDirection(Vector2.down);
             SetupComponent();
+        }
+        protected override void OnValidate()
+        {
+            base.OnValidate();
+#if UNITY_EDITOR
+            bool hasChanges = false;
+            if (animator == null)
+            {
+                animator = GetComponentInChildren<Animator>();
+                if (animator != null)
+                    hasChanges = true;
+            }
+
+            RuntimeAnimatorController changingAnimatorController;
+            changingAnimatorController = Resources.Load("__Animator/__Hero4DCharacter") as RuntimeAnimatorController;
+            if (changingAnimatorController != null &&
+                changingAnimatorController != animatorController)
+            {
+                animatorController = changingAnimatorController;
+                hasChanges = true;
+            }
+            if (animator == null)
+                Debug.LogError("`Animator` is empty");
+            if (animatorController == null)
+                Debug.LogError("`Animator Controller` is empty");
+            if (hasChanges)
+            {
+                isSetupComponent = false;
+                SetupComponent();
+                EditorUtility.SetDirty(this);
+            }
+#endif
         }
 
         private void SetupComponent()
@@ -95,9 +131,16 @@ namespace MultiplayerARPG.HeroEditor4D
 
         private void SetEquipmentSprites()
         {
-            List<CharacterItem> items = new List<CharacterItem>(equipItems);
-            items.Add(equipWeapons.leftHand);
-            items.Add(equipWeapons.rightHand);
+            List<CharacterItem> items = new List<CharacterItem>();
+            if (equipItems != null)
+            {
+                items.AddRange(equipItems);
+            }
+            if (equipWeapons != null)
+            {
+                items.Add(equipWeapons.leftHand);
+                items.Add(equipWeapons.rightHand);
+            }
             // Clear equipped items
             foreach (EHeroEditorItemPart part in equippedParts)
             {
@@ -503,7 +546,28 @@ namespace MultiplayerARPG.HeroEditor4D
             if (moveSpeed > 0)
             {
                 // Update direction
-                Character4D.SetDirection(direction2D);
+                if (Mathf.Abs(direction2D.x) > Mathf.Abs(direction2D.y))
+                {
+                    if (direction2D.x > 0)
+                    {
+                        Character4D.SetDirection(Vector2.right);
+                    }
+                    else
+                    {
+                        Character4D.SetDirection(Vector2.left);
+                    }
+                }
+                else
+                {
+                    if (direction2D.y > 0)
+                    {
+                        Character4D.SetDirection(Vector2.up);
+                    }
+                    else
+                    {
+                        Character4D.SetDirection(Vector2.down);
+                    }
+                }
             }
             animator.SetBool(ANIM_IS_DEAD, isDead);
         }
