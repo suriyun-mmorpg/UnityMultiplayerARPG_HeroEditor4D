@@ -13,21 +13,24 @@ namespace MultiplayerARPG.HeroEditor4D
     [RequireComponent(typeof(Character4D))]
     public class HeroEditorModel : BaseCharacterModel
     {
-        // Clip name variables
-        // Idle
-        public const string CLIP_IDLE = "__Idle";
-        public const string CLIP_MOVE = "__Move";
-        public const string CLIP_SPRINT = "__Sprint";
-        public const string CLIP_DEAD = "__Dead";
-        public const string CLIP_ACTION = "__Action";
-        public const string CLIP_CAST_SKILL = "__CastSkill";
         // Animator variables
-        public static readonly int ANIM_IS_DEAD = Animator.StringToHash("IsDead");
-        public static readonly int ANIM_MOVE_SPEED = Animator.StringToHash("MoveSpeed");
-        public static readonly int ANIM_DO_ACTION = Animator.StringToHash("DoAction");
-        public static readonly int ANIM_IS_CASTING_SKILL = Animator.StringToHash("IsCastingSkill");
-        public static readonly int ANIM_MOVE_CLIP_MULTIPLIER = Animator.StringToHash("MoveSpeedMultiplier");
-        public static readonly int ANIM_ACTION_CLIP_MULTIPLIER = Animator.StringToHash("ActionSpeedMultiplier");
+        public static readonly int ANIM_STATE = Animator.StringToHash("State");
+        public static readonly int ANIM_ACTION = Animator.StringToHash("Action");
+        public static readonly int ANIM_TWO_HANDED = Animator.StringToHash("TwoHanded");
+        public static readonly int ANIM_SPEED_MULTIPLIER = Animator.StringToHash("Speed");
+        public static readonly int ANIM_WEAPON_TYPE = Animator.StringToHash("WeaponType");
+
+        public enum StateTypes
+        {
+            Idle = 0,
+            Ready = 1,
+            Walk = 2,
+            Run = 3,
+            Jump = 4,
+            Climb = 5,
+            Death = 9,
+            Nothing = 13,
+        }
 
         public const List<Sprite> EmptySprites = null;
         public const Sprite EmptySprite = null;
@@ -44,12 +47,10 @@ namespace MultiplayerARPG.HeroEditor4D
         [Header("Relates Components")]
         [Tooltip("It will find `Animator` component on automatically if this is NULL")]
         public Animator animator;
-        [Tooltip("You can set this when animator controller type is `Custom`")]
-        public RuntimeAnimatorController animatorController;
-        public AnimatorOverrideController CacheAnimatorController { get; private set; }
 
         // Private state validater
         private bool isSetupComponent;
+        private bool isCasting;
 
         protected override void Awake()
         {
@@ -58,62 +59,17 @@ namespace MultiplayerARPG.HeroEditor4D
             Character4D.SetDirection(Vector2.down);
             SetupComponent();
         }
-        protected override void OnValidate()
-        {
-            base.OnValidate();
-#if UNITY_EDITOR
-            bool hasChanges = false;
-            if (animator == null)
-            {
-                animator = GetComponentInChildren<Animator>();
-                if (animator != null)
-                    hasChanges = true;
-            }
-
-            RuntimeAnimatorController changingAnimatorController;
-            changingAnimatorController = Resources.Load("__Animator/__Hero4DCharacter") as RuntimeAnimatorController;
-            if (changingAnimatorController != null &&
-                changingAnimatorController != animatorController)
-            {
-                animatorController = changingAnimatorController;
-                hasChanges = true;
-            }
-            if (animator == null)
-                Debug.LogError("`Animator` is empty");
-            if (animatorController == null)
-                Debug.LogError("`Animator Controller` is empty");
-            if (hasChanges)
-            {
-                isSetupComponent = false;
-                SetupComponent();
-                EditorUtility.SetDirty(this);
-            }
-#endif
-        }
 
         private void SetupComponent()
         {
             if (isSetupComponent)
                 return;
             isSetupComponent = true;
-            if (CacheAnimatorController == null)
-                CacheAnimatorController = new AnimatorOverrideController(animatorController);
-            // Use override controller as animator
-            if (animator != null && animator.runtimeAnimatorController != CacheAnimatorController)
-                animator.runtimeAnimatorController = CacheAnimatorController;
             SetDefaultAnimations();
         }
 
         public override void SetDefaultAnimations()
         {
-            // Set default clips
-            if (CacheAnimatorController != null)
-            {
-                CacheAnimatorController[CLIP_IDLE] = defaultAnimations.idleClip;
-                CacheAnimatorController[CLIP_MOVE] = defaultAnimations.moveClip;
-                CacheAnimatorController[CLIP_SPRINT] = defaultAnimations.sprintClip;
-                CacheAnimatorController[CLIP_DEAD] = defaultAnimations.deadClip;
-            }
             base.SetDefaultAnimations();
         }
 
@@ -309,9 +265,9 @@ namespace MultiplayerARPG.HeroEditor4D
             return CacheAnimationsManager.SetAndTryGetCacheSkillAnimations(CacheIdentity.HashAssetId, weaponAnimations, skillAnimations, dataId, out anims);
         }
 
-        private ActionAnimation GetActionAnimation(AnimActionType animActionType, int dataId)
+        private HeroEditorActionAnimation GetHeroEditorActionAnimation(AnimActionType animActionType, int dataId)
         {
-            ActionAnimation animation = defaultAnimations.attackAnimation;
+            HeroEditorActionAnimation animation = defaultAnimations.attackAnimation;
             HeroEditorWeaponAnimation weaponAnimations;
             HeroEditorSkillAnimation skillAnimations;
             switch (animActionType)
@@ -353,15 +309,11 @@ namespace MultiplayerARPG.HeroEditor4D
 
         public override bool GetLeftHandAttackAnimation(int dataId, int animationIndex, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
         {
-            ActionAnimation animation = defaultAnimations.attackAnimation;
+            HeroEditorActionAnimation animation = defaultAnimations.attackAnimation;
             HeroEditorWeaponAnimation weaponAnims;
             if (TryGetWeaponAnimations(dataId, out weaponAnims))
                 animation = weaponAnims.leftHandAttackAnimation;
-            animSpeedRate = 1f;
-            triggerDurations = new float[] { 0f };
-            totalDuration = 0f;
-            AnimationClip clip = animation.clip;
-            if (clip == null) return false;
+            animSpeedRate = animation.GetAnimSpeedRate();
             triggerDurations = animation.GetTriggerDurations();
             totalDuration = animation.GetTotalDuration();
             return true;
@@ -369,15 +321,11 @@ namespace MultiplayerARPG.HeroEditor4D
 
         public override bool GetRightHandAttackAnimation(int dataId, int animationIndex, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
         {
-            ActionAnimation animation = defaultAnimations.attackAnimation;
+            HeroEditorActionAnimation animation = defaultAnimations.attackAnimation;
             HeroEditorWeaponAnimation weaponAnims;
             if (TryGetWeaponAnimations(dataId, out weaponAnims))
                 animation = weaponAnims.rightHandAttackAnimation;
-            animSpeedRate = 1f;
-            triggerDurations = new float[] { 0f };
-            totalDuration = 0f;
-            AnimationClip clip = animation.clip;
-            if (clip == null) return false;
+            animSpeedRate = animation.GetAnimSpeedRate();
             triggerDurations = animation.GetTriggerDurations();
             totalDuration = animation.GetTotalDuration();
             return true;
@@ -385,15 +333,11 @@ namespace MultiplayerARPG.HeroEditor4D
 
         public override bool GetLeftHandReloadAnimation(int dataId, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
         {
-            ActionAnimation animation = defaultAnimations.reloadAnimation;
+            HeroEditorActionAnimation animation = defaultAnimations.reloadAnimation;
             HeroEditorWeaponAnimation weaponAnims;
             if (TryGetWeaponAnimations(dataId, out weaponAnims))
                 animation = weaponAnims.leftHandReloadAnimation;
-            animSpeedRate = 1f;
-            triggerDurations = new float[] { 0f };
-            totalDuration = 0f;
-            AnimationClip clip = animation.clip;
-            if (clip == null) return false;
+            animSpeedRate = animation.GetAnimSpeedRate();
             triggerDurations = animation.GetTriggerDurations();
             totalDuration = animation.GetTotalDuration();
             return true;
@@ -401,15 +345,11 @@ namespace MultiplayerARPG.HeroEditor4D
 
         public override bool GetRightHandReloadAnimation(int dataId, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
         {
-            ActionAnimation animation = defaultAnimations.reloadAnimation;
+            HeroEditorActionAnimation animation = defaultAnimations.reloadAnimation;
             HeroEditorWeaponAnimation weaponAnims;
             if (TryGetWeaponAnimations(dataId, out weaponAnims))
                 animation = weaponAnims.rightHandReloadAnimation;
-            animSpeedRate = 1f;
-            triggerDurations = new float[] { 0f };
-            totalDuration = 0f;
-            AnimationClip clip = animation.clip;
-            if (clip == null) return false;
+            animSpeedRate = animation.GetAnimSpeedRate();
             triggerDurations = animation.GetTriggerDurations();
             totalDuration = animation.GetTotalDuration();
             return true;
@@ -429,39 +369,30 @@ namespace MultiplayerARPG.HeroEditor4D
 
         public override bool GetSkillActivateAnimation(int dataId, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
         {
-            ActionAnimation animation2D = defaultAnimations.skillActivateAnimation;
+            HeroEditorActionAnimation animation = defaultAnimations.skillActivateAnimation;
             HeroEditorSkillAnimation skillAnims;
             if (TryGetSkillAnimations(dataId, out skillAnims))
-                animation2D = skillAnims.activateAnimation;
-            animSpeedRate = 1f;
-            triggerDurations = new float[] { 0f };
-            totalDuration = 0f;
-            AnimationClip clip = animation2D.clip;
-            if (clip == null) return false;
-            triggerDurations = animation2D.GetTriggerDurations();
-            totalDuration = animation2D.GetTotalDuration();
+                animation = skillAnims.activateAnimation;
+            animSpeedRate = animation.GetAnimSpeedRate();
+            triggerDurations = animation.GetTriggerDurations();
+            totalDuration = animation.GetTotalDuration();
             return true;
         }
 
         public override Coroutine PlayActionAnimation(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier = 1f)
         {
-            return StartCoroutine(PlayActionAnimation_Animator(animActionType, dataId, index, playSpeedMultiplier));
+            return StartCoroutine(PlayHeroEditorActionAnimation_Animator(animActionType, dataId, index, playSpeedMultiplier));
         }
 
-        private IEnumerator PlayActionAnimation_Animator(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier)
+        private IEnumerator PlayHeroEditorActionAnimation_Animator(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier)
         {
             // If animator is not null, play the action animation
-            ActionAnimation animation = GetActionAnimation(animActionType, dataId);
+            HeroEditorActionAnimation animation = GetHeroEditorActionAnimation(animActionType, dataId);
             // Action
-            CacheAnimatorController[CLIP_ACTION] = animation.clip;
-            yield return 0;
+            animator.SetTrigger(animation.GetTriggerName());
             AudioManager.PlaySfxClipAtAudioSource(animation.GetRandomAudioClip(), genericAudioSource);
-            animator.SetFloat(ANIM_ACTION_CLIP_MULTIPLIER, playSpeedMultiplier);
-            animator.SetBool(ANIM_DO_ACTION, true);
-            animator.Play(0, 0, 0f);
             // Waits by current transition + clip duration before end animation
             yield return new WaitForSecondsRealtime(animation.GetClipLength() / playSpeedMultiplier);
-            animator.SetBool(ANIM_DO_ACTION, false);
             // Waits by current transition + extra duration before end playing animation state
             yield return new WaitForSecondsRealtime(animation.GetExtraDuration() / playSpeedMultiplier);
         }
@@ -473,23 +404,10 @@ namespace MultiplayerARPG.HeroEditor4D
 
         private IEnumerator PlaySkillCastClip_Animator(int dataId, float duration)
         {
-            AnimationClip clip;
-            HeroEditorSkillAnimation skillAnimations;
-            if (!TryGetSkillAnimations(dataId, out skillAnimations))
-                clip = defaultAnimations.skillCastClip;
-            else
-                clip = skillAnimations.castClip;
-
-            if (clip != null)
-            {
-                // Cast Skill
-                CacheAnimatorController[CLIP_CAST_SKILL] = clip;
-                yield return 0;
-                animator.SetBool(ANIM_IS_CASTING_SKILL, true);
-                animator.Play(0, 0, 0f);
-                yield return new WaitForSecondsRealtime(duration);
-                animator.SetBool(ANIM_IS_CASTING_SKILL, false);
-            }
+            // Cast Skill
+            isCasting = true;
+            yield return new WaitForSecondsRealtime(duration);
+            isCasting = false;
         }
 
         public override void PlayWeaponChargeClip(int dataId, bool isLeftHand)
@@ -499,12 +417,13 @@ namespace MultiplayerARPG.HeroEditor4D
 
         public override void StopActionAnimation()
         {
-            animator.SetBool(ANIM_DO_ACTION, false);
+            animator.SetBool(ANIM_ACTION, false);
         }
 
         public override void StopSkillCastAnimation()
         {
-            animator.SetBool(ANIM_IS_CASTING_SKILL, false);
+            animator.SetBool(ANIM_ACTION, false);
+            animator.SetInteger(ANIM_STATE, (int)StateTypes.Idle);
         }
 
         public override void StopWeaponChargeAnimation()
@@ -517,59 +436,56 @@ namespace MultiplayerARPG.HeroEditor4D
             if (!animator.gameObject.activeInHierarchy)
                 return;
 
-            if (animator.runtimeAnimatorController != CacheAnimatorController)
-                animator.runtimeAnimatorController = CacheAnimatorController;
-
             if (isDead)
             {
-                // Clear action animations when dead
-                if (animator.GetBool(ANIM_DO_ACTION))
-                    animator.SetBool(ANIM_DO_ACTION, false);
-                if (animator.GetBool(ANIM_IS_CASTING_SKILL))
-                    animator.SetBool(ANIM_IS_CASTING_SKILL, false);
+                animator.SetInteger(ANIM_STATE, (int)StateTypes.Death);
+                return;
             }
 
-            float moveSpeed = 0f;
+            if (isCasting)
+            {
+                animator.SetInteger(ANIM_STATE, (int)StateTypes.Ready);
+                return;
+            }
+
             if (movementState.HasFlag(MovementState.Forward) ||
                 movementState.HasFlag(MovementState.Backward) ||
                 movementState.HasFlag(MovementState.Right) ||
                 movementState.HasFlag(MovementState.Left))
             {
                 if (extraMovementState.HasFlag(ExtraMovementState.IsSprinting))
-                    moveSpeed = 2;
+                    animator.SetInteger(ANIM_STATE, (int)StateTypes.Run);
                 else
-                    moveSpeed = 1;
+                    animator.SetInteger(ANIM_STATE, (int)StateTypes.Walk);
             }
-            // Set animator parameters
-            animator.SetFloat(ANIM_MOVE_SPEED, isDead ? 0 : moveSpeed);
-            animator.SetFloat(ANIM_MOVE_CLIP_MULTIPLIER, moveAnimationSpeedMultiplier);
-            if (moveSpeed > 0)
+            else
             {
-                // Update direction
-                if (Mathf.Abs(direction2D.x) > Mathf.Abs(direction2D.y))
+                animator.SetInteger(ANIM_STATE, (int)StateTypes.Idle);
+            }
+
+            // Update direction
+            if (Mathf.Abs(direction2D.x) > Mathf.Abs(direction2D.y))
+            {
+                if (direction2D.x > 0)
                 {
-                    if (direction2D.x > 0)
-                    {
-                        Character4D.SetDirection(Vector2.right);
-                    }
-                    else
-                    {
-                        Character4D.SetDirection(Vector2.left);
-                    }
+                    Character4D.SetDirection(Vector2.right);
                 }
                 else
                 {
-                    if (direction2D.y > 0)
-                    {
-                        Character4D.SetDirection(Vector2.up);
-                    }
-                    else
-                    {
-                        Character4D.SetDirection(Vector2.down);
-                    }
+                    Character4D.SetDirection(Vector2.left);
                 }
             }
-            animator.SetBool(ANIM_IS_DEAD, isDead);
+            else
+            {
+                if (direction2D.y > 0)
+                {
+                    Character4D.SetDirection(Vector2.up);
+                }
+                else
+                {
+                    Character4D.SetDirection(Vector2.down);
+                }
+            }
         }
 
         public override SkillActivateAnimationType UseSkillActivateAnimationType(int dataId)
