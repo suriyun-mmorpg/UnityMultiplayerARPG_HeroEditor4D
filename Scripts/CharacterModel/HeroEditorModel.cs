@@ -35,7 +35,7 @@ namespace MultiplayerARPG.HeroEditor4D
         public HeroEditorWeaponAnimation[] weaponAnimations;
         [ArrayElementTitle("skill")]
         public HeroEditorSkillAnimation[] skillAnimations;
-        private Character4D character4D;
+        public Character4D Character4D { get; private set; }
         private HashSet<EHeroEditorItemPart> equippedParts = new HashSet<EHeroEditorItemPart>();
 
         [Header("Relates Components")]
@@ -51,7 +51,7 @@ namespace MultiplayerARPG.HeroEditor4D
         protected override void Awake()
         {
             base.Awake();
-            character4D = GetComponent<Character4D>();
+            Character4D = GetComponent<Character4D>();
             SetupComponent();
         }
 
@@ -104,61 +104,61 @@ namespace MultiplayerARPG.HeroEditor4D
                 switch (part)
                 {
                     case EHeroEditorItemPart.Armor:
-                        character4D.EquipArmor(EmptySprites);
+                        Character4D.EquipArmor(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Helmet:
-                        character4D.EquipHelmet(EmptySprites);
+                        Character4D.EquipHelmet(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Shield:
-                        character4D.EquipShield(EmptySprites);
+                        Character4D.EquipShield(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Melee1H:
-                        character4D.EquipMeleeWeapon1H(EmptySprite);
+                        Character4D.EquipMeleeWeapon1H(EmptySprite);
                         break;
                     case EHeroEditorItemPart.Melee2H:
-                        character4D.EquipMeleeWeapon2H(EmptySprite);
+                        Character4D.EquipMeleeWeapon2H(EmptySprite);
                         break;
                     case EHeroEditorItemPart.Bow:
-                        character4D.EquipBow(EmptySprites);
+                        Character4D.EquipBow(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Crossbow:
-                        character4D.EquipCrossbow(EmptySprites);
+                        Character4D.EquipCrossbow(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Firearm1H:
-                        character4D.EquipSecondaryFirearm(EmptySprites);
+                        Character4D.EquipSecondaryFirearm(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Supplies:
-                        character4D.EquipSupply(EmptySprite);
+                        Character4D.EquipSupply(EmptySprite);
                         break;
                     case EHeroEditorItemPart.Body:
-                        character4D.SetBody(EmptySprites);
+                        Character4D.SetBody(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Ears:
-                        character4D.SetEars(EmptySprites);
+                        Character4D.SetEars(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Eyebrows:
-                        character4D.SetEyebrows(EmptySprites);
+                        Character4D.SetEyebrows(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Eyes:
-                        character4D.SetEyes(EmptySprites);
+                        Character4D.SetEyes(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Hair:
-                        character4D.SetHair(EmptySprites);
+                        Character4D.SetHair(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Beard:
-                        character4D.SetBeard(EmptySprites);
+                        Character4D.SetBeard(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Mouth:
-                        character4D.SetMouth(EmptySprites);
+                        Character4D.SetMouth(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Makeup:
-                        character4D.SetMakeup(EmptySprites);
+                        Character4D.SetMakeup(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Mask:
-                        character4D.SetMask(EmptySprites);
+                        Character4D.SetMask(EmptySprites);
                         break;
                     case EHeroEditorItemPart.Earrings:
-                        character4D.SetEarrings(EmptySprites);
+                        Character4D.SetEarrings(EmptySprites);
                         break;
                 }
             }
@@ -177,79 +177,79 @@ namespace MultiplayerARPG.HeroEditor4D
                     {
                         case EHeroEditorItemPart.Armor:
                             dict = spriteCollection.Armor.ToDictionary(i => i.FullName, i => i);
-                            character4D.EquipArmor(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.EquipArmor(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Helmet:
                             dict = spriteCollection.Armor.ToDictionary(i => i.FullName, i => i);
-                            character4D.EquipHelmet(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.EquipHelmet(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Shield:
                             dict = spriteCollection.Shield.ToDictionary(i => i.FullName, i => i);
-                            character4D.EquipShield(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.EquipShield(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Melee1H:
                             dict = spriteCollection.MeleeWeapon1H.ToDictionary(i => i.FullName, i => i);
-                            character4D.EquipMeleeWeapon1H(dict[itemData.SpriteData.id]?.Sprite);
+                            Character4D.EquipMeleeWeapon1H(dict[itemData.SpriteData.id]?.Sprite);
                             break;
                         case EHeroEditorItemPart.Melee2H:
                             dict = spriteCollection.MeleeWeapon2H.ToDictionary(i => i.FullName, i => i);
-                            character4D.EquipMeleeWeapon2H(dict[itemData.SpriteData.id]?.Sprite);
+                            Character4D.EquipMeleeWeapon2H(dict[itemData.SpriteData.id]?.Sprite);
                             break;
                         case EHeroEditorItemPart.Bow:
                             dict = spriteCollection.Bow.ToDictionary(i => i.FullName, i => i);
-                            character4D.EquipBow(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.EquipBow(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Crossbow:
                             dict = spriteCollection.Crossbow.ToDictionary(i => i.FullName, i => i);
-                            character4D.EquipCrossbow(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.EquipCrossbow(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Firearm1H:
                             dict = spriteCollection.Firearm1H.ToDictionary(i => i.FullName, i => i);
-                            character4D.EquipSecondaryFirearm(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.EquipSecondaryFirearm(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Supplies:
                             dict = spriteCollection.Supplies.ToDictionary(i => i.FullName, i => i);
-                            character4D.EquipSupply(dict[itemData.SpriteData.id]?.Sprite);
+                            Character4D.EquipSupply(dict[itemData.SpriteData.id]?.Sprite);
                             break;
                         case EHeroEditorItemPart.Body:
                             dict = spriteCollection.Body.ToDictionary(i => i.FullName, i => i);
-                            character4D.SetBody(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.SetBody(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Ears:
                             dict = spriteCollection.Ears.ToDictionary(i => i.FullName, i => i);
-                            character4D.SetEars(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.SetEars(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Eyebrows:
                             dict = spriteCollection.Eyebrows.ToDictionary(i => i.FullName, i => i);
-                            character4D.SetEyebrows(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.SetEyebrows(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Eyes:
                             dict = spriteCollection.Eyes.ToDictionary(i => i.FullName, i => i);
-                            character4D.SetEyes(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.SetEyes(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Hair:
                             dict = spriteCollection.Hair.ToDictionary(i => i.FullName, i => i);
-                            character4D.SetHair(dict[itemData.SpriteData.id]);
+                            Character4D.SetHair(dict[itemData.SpriteData.id]);
                             break;
                         case EHeroEditorItemPart.Beard:
                             dict = spriteCollection.Beard.ToDictionary(i => i.FullName, i => i);
-                            character4D.SetBeard(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.SetBeard(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Mouth:
                             dict = spriteCollection.Mouth.ToDictionary(i => i.FullName, i => i);
-                            character4D.SetMouth(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.SetMouth(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Makeup:
                             dict = spriteCollection.Makeup.ToDictionary(i => i.FullName, i => i);
-                            character4D.SetMakeup(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.SetMakeup(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Mask:
                             dict = spriteCollection.Mask.ToDictionary(i => i.FullName, i => i);
-                            character4D.SetMask(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.SetMask(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                         case EHeroEditorItemPart.Earrings:
                             dict = spriteCollection.Earrings.ToDictionary(i => i.FullName, i => i);
-                            character4D.SetEarrings(dict[itemData.SpriteData.id]?.Sprites);
+                            Character4D.SetEarrings(dict[itemData.SpriteData.id]?.Sprites);
                             break;
                     }
                 }
@@ -471,7 +471,41 @@ namespace MultiplayerARPG.HeroEditor4D
 
         public override void PlayMoveAnimation()
         {
-            throw new System.NotImplementedException();
+            if (!animator.gameObject.activeInHierarchy)
+                return;
+
+            if (animator.runtimeAnimatorController != CacheAnimatorController)
+                animator.runtimeAnimatorController = CacheAnimatorController;
+
+            if (isDead)
+            {
+                // Clear action animations when dead
+                if (animator.GetBool(ANIM_DO_ACTION))
+                    animator.SetBool(ANIM_DO_ACTION, false);
+                if (animator.GetBool(ANIM_IS_CASTING_SKILL))
+                    animator.SetBool(ANIM_IS_CASTING_SKILL, false);
+            }
+
+            float moveSpeed = 0f;
+            if (movementState.HasFlag(MovementState.Forward) ||
+                movementState.HasFlag(MovementState.Backward) ||
+                movementState.HasFlag(MovementState.Right) ||
+                movementState.HasFlag(MovementState.Left))
+            {
+                if (extraMovementState.HasFlag(ExtraMovementState.IsSprinting))
+                    moveSpeed = 2;
+                else
+                    moveSpeed = 1;
+            }
+            // Set animator parameters
+            animator.SetFloat(ANIM_MOVE_SPEED, isDead ? 0 : moveSpeed);
+            animator.SetFloat(ANIM_MOVE_CLIP_MULTIPLIER, moveAnimationSpeedMultiplier);
+            if (moveSpeed > 0)
+            {
+                // Update direction
+                Character4D.SetDirection(direction2D);
+            }
+            animator.SetBool(ANIM_IS_DEAD, isDead);
         }
 
         public override SkillActivateAnimationType UseSkillActivateAnimationType(int dataId)
