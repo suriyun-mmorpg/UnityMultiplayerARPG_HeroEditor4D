@@ -1,6 +1,7 @@
 ﻿namespace MultiplayerARPG.HeroEditor4D
 {
-    public class HeroEditorWeaponAnimation : IWeaponAnims
+    [System.Serializable]
+    public struct HeroEditorWeaponAnimation : IWeaponAnims
     {
         public WeaponType weaponType;
         public ActionAnimation rightHandAttackAnimation;
