@@ -498,6 +498,13 @@ namespace MultiplayerARPG.HeroEditor4D
             }
 
             // Update direction
+            if (Mathf.Abs(Mathf.Abs(direction2D.x) - Mathf.Abs(direction2D.y)) < 0.01f)
+            {
+                // Up, Down is higher priority
+                Vector2 applyDirection2D = direction2D;
+                applyDirection2D.x = 0;
+                direction2D = applyDirection2D.normalized;
+            }
             if (Mathf.Abs(direction2D.x) > Mathf.Abs(direction2D.y))
             {
                 if (direction2D.x > 0)
