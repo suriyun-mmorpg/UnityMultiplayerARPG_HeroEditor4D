@@ -19,7 +19,14 @@ MonoBehaviour:
   attributes: []
   currencies: []
   damageElements: []
-  items: []
+  items:
+  - {fileID: 11400000, guid: 6e4cfe8bf663850479efdbecf4a91f56, type: 2}
+  - {fileID: 11400000, guid: 5f3a4e67c173ad144aabd3bc083d60f0, type: 2}
+  - {fileID: 11400000, guid: a0e07d2567969d942906cce0617cbd43, type: 2}
+  - {fileID: 11400000, guid: e501ac0ba8226484087e22d21a110dd7, type: 2}
+  - {fileID: 11400000, guid: 0ed3be3d7572c8741a3a63cb6b6695a3, type: 2}
+  - {fileID: 11400000, guid: a5081dad85ff766419bbdf6d7a24b24e, type: 2}
+  - {fileID: 11400000, guid: 8f7234fa817409d4bb911ad8ccd39509, type: 2}
   itemCraftFormulas: []
   armorTypes: []
   weaponTypes: []

@@ -1,0 +1,160 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f8688024d2994d44a4f720a40efaab2, type: 3}
+  m_Name: TestSword
+  m_EditorClassIdentifier: 
+  id: 
+  title: TestSword
+  titles: []
+  description: 
+  descriptions: []
+  category: 
+  icon: {fileID: 21300000, guid: 4c4730f1ed8db554f9201200c887d8f0, type: 3}
+  dropModel: {fileID: 0}
+  sellPrice: 0
+  weight: 0
+  maxStack: 1
+  itemRefine: {fileID: 0}
+  lockDuration: 0
+  dismantleReturnGold: 0
+  dismantleReturnItems: []
+  requirement:
+    character: {fileID: 0}
+    level: 0
+    attributeAmounts: []
+  equipmentSet: {fileID: 0}
+  maxDurability: 0
+  destroyIfBroken: 0
+  maxSocket: 0
+  equipmentModels: []
+  increaseStats:
+    baseStats:
+      hp: 0
+      mp: 0
+      accuracy: 0
+      evasion: 0
+      criRate: 0
+      criDmgRate: 0
+      blockRate: 0
+      blockDmgRate: 0
+      moveSpeed: 0
+      atkSpeed: 0
+      weightLimit: 0
+      slotLimit: 0
+      stamina: 0
+      food: 0
+      water: 0
+      testStats: 0
+    statsIncreaseEachLevel:
+      hp: 0
+      mp: 0
+      accuracy: 0
+      evasion: 0
+      criRate: 0
+      criDmgRate: 0
+      blockRate: 0
+      blockDmgRate: 0
+      moveSpeed: 0
+      atkSpeed: 0
+      weightLimit: 0
+      slotLimit: 0
+      stamina: 0
+      food: 0
+      water: 0
+      testStats: 0
+  increaseStatsRate:
+    baseStats:
+      hp: 0
+      mp: 0
+      accuracy: 0
+      evasion: 0
+      criRate: 0
+      criDmgRate: 0
+      blockRate: 0
+      blockDmgRate: 0
+      moveSpeed: 0
+      atkSpeed: 0
+      weightLimit: 0
+      slotLimit: 0
+      stamina: 0
+      food: 0
+      water: 0
+      testStats: 0
+    statsIncreaseEachLevel:
+      hp: 0
+      mp: 0
+      accuracy: 0
+      evasion: 0
+      criRate: 0
+      criDmgRate: 0
+      blockRate: 0
+      blockDmgRate: 0
+      moveSpeed: 0
+      atkSpeed: 0
+      weightLimit: 0
+      slotLimit: 0
+      stamina: 0
+      food: 0
+      water: 0
+      testStats: 0
+  increaseAttributes: []
+  increaseAttributesRate: []
+  increaseResistances: []
+  increaseArmors: []
+  increaseDamages: []
+  increaseSkillLevels: []
+  spriteData:
+    part: 4
+    id: Basic/Sword1H
+    color: {r: 1, g: 1, b: 1, a: 1}
+  weaponType: {fileID: 11400000, guid: 620612cc5db67e8418b3fdcc0fdf8d7a, type: 2}
+  offHandEquipmentModels: []
+  damageAmount:
+    damageElement: {fileID: 0}
+    amount:
+      baseAmount:
+        min: 0
+        max: 0
+      amountIncreaseEachLevel:
+        min: 0
+        max: 0
+  harvestDamageAmount:
+    baseAmount:
+      min: 0
+      max: 0
+    amountIncreaseEachLevel:
+      min: 0
+      max: 0
+  moveSpeedRateWhileReloading: 1
+  moveSpeedRateWhileCharging: 1
+  moveSpeedRateWhileAttacking: 0
+  ammoCapacity: 0
+  weaponAbility: {fileID: 0}
+  crosshairSetting:
+    hidden: 0
+    expandPerFrameWhileMoving: 0
+    expandPerFrameWhileAttacking: 0
+    shrinkPerFrame: 0
+    shrinkPerFrameWhenAttacked: 0
+    minSpread: 0
+    maxSpread: 0
+    recoilX: 0
+    recoilY: 0
+  launchClip: {fileID: 0}
+  launchClips: []
+  reloadClip: {fileID: 0}
+  reloadClips: []
+  emptyClip: {fileID: 0}
+  fireType: 0
+  fireStagger: {x: 0, y: 0}
+  fireSpread: 0
+  destroyImmediatelyAfterFired: 0

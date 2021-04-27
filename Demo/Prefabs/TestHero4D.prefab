@@ -4515,7 +4515,6 @@ MonoBehaviour:
   characterDatabases:
   - {fileID: 11400000, guid: 6defb42150f66a64ca3bdfe478a6a72c, type: 2}
   controllerPrefab: {fileID: 0}
-  clientSendAimPositionInterval: 0.05
   dataId:
     behaviour: {fileID: 0}
     elementId: 0
