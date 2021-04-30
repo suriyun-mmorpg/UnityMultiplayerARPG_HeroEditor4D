@@ -194,41 +194,81 @@ namespace MultiplayerARPG.HeroEditor4D
                         dict = spriteCollection.Armor.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.EquipArmor(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.ArmorRenderers != null)
+                                j.ArmorRenderers.ForEach(k => k.color = sprite.color);
+                        });
                         break;
                     case EHeroEditorItemPart.Helmet:
                         dict = spriteCollection.Armor.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.EquipHelmet(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.HelmetRenderer != null)
+                                j.HelmetRenderer.color = sprite.color;
+                        });
                         break;
                     case EHeroEditorItemPart.Shield:
                         dict = spriteCollection.Shield.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.EquipShield(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.ShieldRenderers != null)
+                                j.ShieldRenderers.ForEach(k => k.color = sprite.color);
+                        });
                         break;
                     case EHeroEditorItemPart.Melee1H:
                         dict = spriteCollection.MeleeWeapon1H.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.EquipMeleeWeapon1H(dict[sprite.id].Sprite);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.PrimaryWeaponRenderer != null)
+                                j.PrimaryWeaponRenderer.color = sprite.color;
+                        });
                         break;
                     case EHeroEditorItemPart.Melee2H:
                         dict = spriteCollection.MeleeWeapon2H.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.EquipMeleeWeapon2H(dict[sprite.id].Sprite);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.PrimaryWeaponRenderer != null)
+                                j.PrimaryWeaponRenderer.color = sprite.color;
+                        });
                         break;
                     case EHeroEditorItemPart.Bow:
                         dict = spriteCollection.Bow.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.EquipBow(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.BowRenderers != null)
+                                j.BowRenderers.ForEach(k => k.color = sprite.color);
+                        });
                         break;
                     case EHeroEditorItemPart.Crossbow:
                         dict = spriteCollection.Crossbow.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.EquipCrossbow(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.PrimaryWeaponRenderer != null)
+                                j.PrimaryWeaponRenderer.color = sprite.color;
+                        });
                         break;
                     case EHeroEditorItemPart.Firearm1H:
                         dict = spriteCollection.Firearm1H.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.EquipSecondaryFirearm(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.SecondaryWeaponRenderer != null)
+                                j.SecondaryWeaponRenderer.color = sprite.color;
+                        });
                         break;
                     case EHeroEditorItemPart.Supplies:
                         dict = spriteCollection.Supplies.ToDictionary(i => i.FullName, i => i);
@@ -239,50 +279,101 @@ namespace MultiplayerARPG.HeroEditor4D
                         dict = spriteCollection.Body.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.SetBody(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.BodyRenderers != null)
+                                j.BodyRenderers.ForEach(k => k.color = sprite.color);
+                        });
                         break;
                     case EHeroEditorItemPart.Ears:
                         dict = spriteCollection.Ears.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.SetEars(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.EarsRenderers != null)
+                                j.EarsRenderers.ForEach(k => k.color = sprite.color);
+                        });
                         break;
                     case EHeroEditorItemPart.Eyebrows:
                         dict = spriteCollection.Eyebrows.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.SetEyebrows(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.EyebrowsRenderer != null)
+                                j.EyebrowsRenderer.color = sprite.color;
+                        });
                         break;
                     case EHeroEditorItemPart.Eyes:
                         dict = spriteCollection.Eyes.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.SetEyes(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.EyesRenderer != null)
+                                j.EyesRenderer.color = sprite.color;
+                        });
                         break;
                     case EHeroEditorItemPart.Hair:
                         dict = spriteCollection.Hair.ToDictionary(i => i.FullName, i => i);
-                        Character4D.SetHair(dict[sprite.id]);
+                        if (dict.ContainsKey(sprite.id))
+                            Character4D.SetHair(dict[sprite.id]);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.HairRenderer != null)
+                                j.HairRenderer.color = sprite.color;
+                        });
                         break;
                     case EHeroEditorItemPart.Beard:
                         dict = spriteCollection.Beard.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.SetBeard(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.BeardRenderer != null)
+                                j.BeardRenderer.color = sprite.color;
+                        });
                         break;
                     case EHeroEditorItemPart.Mouth:
                         dict = spriteCollection.Mouth.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.SetMouth(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.MouthRenderer != null)
+                                j.MouthRenderer.color = sprite.color;
+                        });
                         break;
                     case EHeroEditorItemPart.Makeup:
                         dict = spriteCollection.Makeup.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.SetMakeup(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.MakeupRenderer != null)
+                                j.MakeupRenderer.color = sprite.color;
+                        });
                         break;
                     case EHeroEditorItemPart.Mask:
                         dict = spriteCollection.Mask.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.SetMask(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.MaskRenderer != null)
+                                j.MaskRenderer.color = sprite.color;
+                        });
                         break;
                     case EHeroEditorItemPart.Earrings:
                         dict = spriteCollection.Earrings.ToDictionary(i => i.FullName, i => i);
                         if (dict.ContainsKey(sprite.id))
                             Character4D.SetEarrings(dict[sprite.id].Sprites);
+                        Character4D.Parts.ForEach(j =>
+                        {
+                            if (j.EarringsRenderers != null)
+                                j.EarringsRenderers.ForEach(k => k.color = sprite.color);
+                        });
                         break;
                 }
             }
