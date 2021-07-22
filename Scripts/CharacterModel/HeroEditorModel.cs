@@ -578,7 +578,7 @@ namespace MultiplayerARPG.HeroEditor4D
                 movementState.HasFlag(MovementState.Right) ||
                 movementState.HasFlag(MovementState.Left))
             {
-                if (extraMovementState.HasFlag(ExtraMovementState.IsSprinting))
+                if (movementState.HasFlag(MovementState.IsSprinting))
                     Animator.SetInteger(ANIM_STATE, (int)StateTypes.Run);
                 else
                     Animator.SetInteger(ANIM_STATE, (int)StateTypes.Walk);
