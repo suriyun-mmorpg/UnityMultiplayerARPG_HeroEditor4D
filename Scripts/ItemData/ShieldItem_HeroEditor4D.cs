@@ -4,6 +4,7 @@ namespace MultiplayerARPG
 {
     public partial class ShieldItem : IHeroEditorItem
     {
+        [Category(11, "In-Scene Settings (HeroEditor4D)")]
         public HeroEditorSpriteData spriteData;
         public HeroEditorSpriteData SpriteData { get { return spriteData; } }
     }
