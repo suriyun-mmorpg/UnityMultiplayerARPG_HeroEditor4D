@@ -503,9 +503,9 @@ namespace MultiplayerARPG.HeroEditor4D
             return true;
         }
 
-        public override Coroutine PlayActionAnimation(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier = 1f)
+        public override void PlayActionAnimation(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier = 1f)
         {
-            return StartCoroutine(PlayActionAnimation_Animator(animActionType, dataId, index, playSpeedMultiplier));
+            StartCoroutine(PlayActionAnimation_Animator(animActionType, dataId, index, playSpeedMultiplier));
         }
 
         private IEnumerator PlayActionAnimation_Animator(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier)
@@ -522,9 +522,9 @@ namespace MultiplayerARPG.HeroEditor4D
             yield return new WaitForSecondsRealtime(animation.GetExtraDuration() / playSpeedMultiplier);
         }
 
-        public override Coroutine PlaySkillCastClip(int dataId, float duration)
+        public override void PlaySkillCastClip(int dataId, float duration)
         {
-            return StartCoroutine(PlaySkillCastClip_Animator(dataId, duration));
+            StartCoroutine(PlaySkillCastClip_Animator(dataId, duration));
         }
 
         private IEnumerator PlaySkillCastClip_Animator(int dataId, float duration)
@@ -620,7 +620,7 @@ namespace MultiplayerARPG.HeroEditor4D
             }
         }
 
-        public override SkillActivateAnimationType UseSkillActivateAnimationType(int dataId)
+        public override SkillActivateAnimationType GetSkillActivateAnimationType(int dataId)
         {
             HeroEditorSkillAnimation anims;
             if (!TryGetSkillAnimations(dataId, out anims))
