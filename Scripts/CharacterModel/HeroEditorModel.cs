@@ -165,6 +165,21 @@ namespace MultiplayerARPG.HeroEditor4D
                     case EHeroEditorItemPart.Earrings:
                         Character4D.UnEquip(Enums.EquipmentPart.Earrings);
                         break;
+                    case EHeroEditorItemPart.Vest:
+                        Character4D.UnEquip(Enums.EquipmentPart.Vest);
+                        break;
+                    case EHeroEditorItemPart.Bracers:
+                        Character4D.UnEquip(Enums.EquipmentPart.Bracers);
+                        break;
+                    case EHeroEditorItemPart.Leggings:
+                        Character4D.UnEquip(Enums.EquipmentPart.Leggings);
+                        break;
+                    case EHeroEditorItemPart.Cape:
+                        Character4D.UnEquip(Enums.EquipmentPart.Cape);
+                        break;
+                    case EHeroEditorItemPart.Back:
+                        Character4D.UnEquip(Enums.EquipmentPart.Back);
+                        break;
                 }
             }
 
@@ -185,7 +200,6 @@ namespace MultiplayerARPG.HeroEditor4D
                 sprites[itemData.SpriteData.part] = itemData.SpriteData;
             }
 
-            Dictionary<string, SpriteGroupEntry> dict;
             foreach (HeroEditorSpriteData sprite in sprites.Values)
             {
                 switch (sprite.part)
@@ -245,6 +259,21 @@ namespace MultiplayerARPG.HeroEditor4D
                         break;
                     case EHeroEditorItemPart.Earrings:
                         Character4D.Equip(spriteCollection.Earrings.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Earrings, sprite.color);
+                        break;
+                    case EHeroEditorItemPart.Vest:
+                        Character4D.Equip(spriteCollection.Armor.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Vest, sprite.color);
+                        break;
+                    case EHeroEditorItemPart.Bracers:
+                        Character4D.Equip(spriteCollection.Armor.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Bracers, sprite.color);
+                        break;
+                    case EHeroEditorItemPart.Leggings:
+                        Character4D.Equip(spriteCollection.Armor.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Leggings, sprite.color);
+                        break;
+                    case EHeroEditorItemPart.Cape:
+                        Character4D.Equip(spriteCollection.Cape.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Cape, sprite.color);
+                        break;
+                    case EHeroEditorItemPart.Back:
+                        Character4D.Equip(spriteCollection.Back.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Back, sprite.color);
                         break;
                 }
             }

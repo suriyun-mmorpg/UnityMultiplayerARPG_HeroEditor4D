@@ -22,6 +22,11 @@
         Makeup,
         Mask,
         Earrings,
+        Vest,
+        Bracers,
+        Leggings,
+        Cape,
+        Back,
         Count
     }
 }
