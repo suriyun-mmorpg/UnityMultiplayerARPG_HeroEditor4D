@@ -1,5 +1,6 @@
 ﻿using Assets.HeroEditor4D.Common.CharacterScripts;
-using HeroEditor.Common;
+using HeroEditor4D.Common;
+using Enums = HeroEditor4D.Common.Enums;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,61 +110,60 @@ namespace MultiplayerARPG.HeroEditor4D
                 switch ((EHeroEditorItemPart)i)
                 {
                     case EHeroEditorItemPart.Armor:
-                        Character4D.EquipArmor(EmptySprites);
+                        Character4D.UnEquip(Enums.EquipmentPart.Armor);
                         break;
                     case EHeroEditorItemPart.Helmet:
-                        Character4D.EquipHelmet(EmptySprites);
+                        Character4D.UnEquip(Enums.EquipmentPart.Helmet);
                         break;
                     case EHeroEditorItemPart.Shield:
-                        Character4D.EquipShield(EmptySprites);
+                        Character4D.UnEquip(Enums.EquipmentPart.Shield);
                         break;
                     case EHeroEditorItemPart.Melee1H:
-                        Character4D.EquipMeleeWeapon1H(EmptySprite);
+                        Character4D.UnEquip(Enums.EquipmentPart.MeleeWeapon1H);
                         break;
                     case EHeroEditorItemPart.Melee2H:
-                        Character4D.EquipMeleeWeapon2H(EmptySprite);
+                        Character4D.UnEquip(Enums.EquipmentPart.MeleeWeapon2H);
                         break;
                     case EHeroEditorItemPart.Bow:
-                        Character4D.EquipBow(EmptySprites);
+                        Character4D.UnEquip(Enums.EquipmentPart.Bow);
                         break;
                     case EHeroEditorItemPart.Crossbow:
-                        Character4D.EquipCrossbow(EmptySprites);
+                        Character4D.UnEquip(Enums.EquipmentPart.Crossbow);
                         break;
                     case EHeroEditorItemPart.Firearm1H:
-                        Character4D.EquipSecondaryFirearm(EmptySprites);
+                        Character4D.UnEquip(Enums.EquipmentPart.SecondaryFirearm1H);
                         break;
                     case EHeroEditorItemPart.Supplies:
-                        Character4D.EquipSupply(EmptySprite);
                         break;
                     case EHeroEditorItemPart.Body:
-                        Character4D.SetBody(EmptySprites);
+                        Character4D.SetBody(null, Enums.BodyPart.Body);
                         break;
                     case EHeroEditorItemPart.Ears:
-                        Character4D.SetEars(EmptySprites);
+                        Character4D.SetBody(null, Enums.BodyPart.Ears);
                         break;
                     case EHeroEditorItemPart.Eyebrows:
-                        Character4D.SetEyebrows(EmptySprites);
+                        Character4D.SetBody(null, Enums.BodyPart.Eyebrows);
                         break;
                     case EHeroEditorItemPart.Eyes:
-                        Character4D.SetEyes(EmptySprites);
+                        Character4D.SetBody(null, Enums.BodyPart.Eyes);
                         break;
                     case EHeroEditorItemPart.Hair:
-                        Character4D.SetHair(EmptySprites);
+                        Character4D.SetBody(null, Enums.BodyPart.Hair);
                         break;
                     case EHeroEditorItemPart.Beard:
-                        Character4D.SetBeard(EmptySprites);
+                        Character4D.SetBody(null, Enums.BodyPart.Beard);
                         break;
                     case EHeroEditorItemPart.Mouth:
-                        Character4D.SetMouth(EmptySprites);
+                        Character4D.SetBody(null, Enums.BodyPart.Mouth);
                         break;
                     case EHeroEditorItemPart.Makeup:
-                        Character4D.SetMakeup(EmptySprites);
+                        Character4D.SetBody(null, Enums.BodyPart.Makeup);
                         break;
                     case EHeroEditorItemPart.Mask:
-                        Character4D.SetMask(EmptySprites);
+                        Character4D.UnEquip(Enums.EquipmentPart.Mask);
                         break;
                     case EHeroEditorItemPart.Earrings:
-                        Character4D.SetEarrings(EmptySprites);
+                        Character4D.UnEquip(Enums.EquipmentPart.Earrings);
                         break;
                 }
             }
@@ -191,189 +191,60 @@ namespace MultiplayerARPG.HeroEditor4D
                 switch (sprite.part)
                 {
                     case EHeroEditorItemPart.Armor:
-                        dict = spriteCollection.Armor.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.EquipArmor(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.ArmorRenderers != null)
-                                j.ArmorRenderers.ForEach(k => k.color = sprite.color);
-                        });
+                        Character4D.Equip(spriteCollection.Armor.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Armor, sprite.color);
                         break;
                     case EHeroEditorItemPart.Helmet:
-                        dict = spriteCollection.Armor.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.EquipHelmet(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.HelmetRenderer != null)
-                                j.HelmetRenderer.color = sprite.color;
-                        });
+                        Character4D.Equip(spriteCollection.Armor.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Helmet, sprite.color);
                         break;
                     case EHeroEditorItemPart.Shield:
-                        dict = spriteCollection.Shield.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.EquipShield(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.ShieldRenderers != null)
-                                j.ShieldRenderers.ForEach(k => k.color = sprite.color);
-                        });
+                        Character4D.Equip(spriteCollection.Shield.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Shield, sprite.color);
                         break;
                     case EHeroEditorItemPart.Melee1H:
-                        dict = spriteCollection.MeleeWeapon1H.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.EquipMeleeWeapon1H(dict[sprite.id].Sprite);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.PrimaryWeaponRenderer != null)
-                                j.PrimaryWeaponRenderer.color = sprite.color;
-                        });
+                        Character4D.Equip(spriteCollection.MeleeWeapon1H.Single(i => i.Name == sprite.id), Enums.EquipmentPart.MeleeWeapon1H, sprite.color);
                         break;
                     case EHeroEditorItemPart.Melee2H:
-                        dict = spriteCollection.MeleeWeapon2H.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.EquipMeleeWeapon2H(dict[sprite.id].Sprite);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.PrimaryWeaponRenderer != null)
-                                j.PrimaryWeaponRenderer.color = sprite.color;
-                        });
+                        Character4D.Equip(spriteCollection.MeleeWeapon2H.Single(i => i.Name == sprite.id), Enums.EquipmentPart.MeleeWeapon2H, sprite.color);
                         break;
                     case EHeroEditorItemPart.Bow:
-                        dict = spriteCollection.Bow.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.EquipBow(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.BowRenderers != null)
-                                j.BowRenderers.ForEach(k => k.color = sprite.color);
-                        });
+                        Character4D.Equip(spriteCollection.Bow.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Bow, sprite.color);
                         break;
                     case EHeroEditorItemPart.Crossbow:
-                        dict = spriteCollection.Crossbow.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.EquipCrossbow(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.PrimaryWeaponRenderer != null)
-                                j.PrimaryWeaponRenderer.color = sprite.color;
-                        });
+                        Character4D.Equip(spriteCollection.Crossbow.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Crossbow, sprite.color);
                         break;
                     case EHeroEditorItemPart.Firearm1H:
-                        dict = spriteCollection.Firearm1H.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.EquipSecondaryFirearm(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.SecondaryWeaponRenderer != null)
-                                j.SecondaryWeaponRenderer.color = sprite.color;
-                        });
+                        Character4D.Equip(spriteCollection.Firearm1H.Single(i => i.Name == sprite.id), Enums.EquipmentPart.SecondaryFirearm1H, sprite.color);
                         break;
                     case EHeroEditorItemPart.Supplies:
-                        dict = spriteCollection.Supplies.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.EquipSupply(dict[sprite.id].Sprite);
                         break;
                     case EHeroEditorItemPart.Body:
-                        dict = spriteCollection.Body.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.SetBody(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.BodyRenderers != null)
-                                j.BodyRenderers.ForEach(k => k.color = sprite.color);
-                        });
+                        Character4D.SetBody(spriteCollection.Body.Single(i => i.Name == sprite.id), Enums.BodyPart.Body, sprite.color);
                         break;
                     case EHeroEditorItemPart.Ears:
-                        dict = spriteCollection.Ears.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.SetEars(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.EarsRenderers != null)
-                                j.EarsRenderers.ForEach(k => k.color = sprite.color);
-                        });
+                        Character4D.SetBody(spriteCollection.Ears.Single(i => i.Name == sprite.id), Enums.BodyPart.Ears, sprite.color);
                         break;
                     case EHeroEditorItemPart.Eyebrows:
-                        dict = spriteCollection.Eyebrows.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.SetEyebrows(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.EyebrowsRenderer != null)
-                                j.EyebrowsRenderer.color = sprite.color;
-                        });
+                        Character4D.SetBody(spriteCollection.Eyebrows.Single(i => i.Name == sprite.id), Enums.BodyPart.Eyebrows, sprite.color);
                         break;
                     case EHeroEditorItemPart.Eyes:
-                        dict = spriteCollection.Eyes.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.SetEyes(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.EyesRenderer != null)
-                                j.EyesRenderer.color = sprite.color;
-                        });
+                        Character4D.SetBody(spriteCollection.Eyes.Single(i => i.Name == sprite.id), Enums.BodyPart.Eyes, sprite.color);
                         break;
                     case EHeroEditorItemPart.Hair:
-                        dict = spriteCollection.Hair.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.SetHair(dict[sprite.id]);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.HairRenderer != null)
-                                j.HairRenderer.color = sprite.color;
-                        });
+                        Character4D.SetBody(spriteCollection.Hair.Single(i => i.Name == sprite.id), Enums.BodyPart.Hair, sprite.color);
                         break;
                     case EHeroEditorItemPart.Beard:
-                        dict = spriteCollection.Beard.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.SetBeard(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.BeardRenderer != null)
-                                j.BeardRenderer.color = sprite.color;
-                        });
+                        Character4D.SetBody(spriteCollection.Beard.Single(i => i.Name == sprite.id), Enums.BodyPart.Beard, sprite.color);
                         break;
                     case EHeroEditorItemPart.Mouth:
-                        dict = spriteCollection.Mouth.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.SetMouth(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.MouthRenderer != null)
-                                j.MouthRenderer.color = sprite.color;
-                        });
+                        Character4D.SetBody(spriteCollection.Mouth.Single(i => i.Name == sprite.id), Enums.BodyPart.Mouth, sprite.color);
                         break;
                     case EHeroEditorItemPart.Makeup:
-                        dict = spriteCollection.Makeup.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.SetMakeup(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.MakeupRenderer != null)
-                                j.MakeupRenderer.color = sprite.color;
-                        });
+                        Character4D.SetBody(spriteCollection.Makeup.Single(i => i.Name == sprite.id), Enums.BodyPart.Makeup, sprite.color);
                         break;
                     case EHeroEditorItemPart.Mask:
-                        dict = spriteCollection.Mask.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.SetMask(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.MaskRenderer != null)
-                                j.MaskRenderer.color = sprite.color;
-                        });
+                        Character4D.Equip(spriteCollection.Mask.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Mask, sprite.color);
                         break;
                     case EHeroEditorItemPart.Earrings:
-                        dict = spriteCollection.Earrings.ToDictionary(i => i.FullName, i => i);
-                        if (dict.ContainsKey(sprite.id))
-                            Character4D.SetEarrings(dict[sprite.id].Sprites);
-                        Character4D.Parts.ForEach(j =>
-                        {
-                            if (j.EarringsRenderers != null)
-                                j.EarringsRenderers.ForEach(k => k.color = sprite.color);
-                        });
+                        Character4D.Equip(spriteCollection.Earrings.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Earrings, sprite.color);
                         break;
                 }
             }
