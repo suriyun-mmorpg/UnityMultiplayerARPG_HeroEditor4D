@@ -175,10 +175,8 @@ namespace MultiplayerARPG.HeroEditor4D
                         Character4D.UnEquip(Enums.EquipmentPart.Leggings);
                         break;
                     case EHeroEditorItemPart.Cape:
-                        Character4D.UnEquip(Enums.EquipmentPart.Cape);
                         break;
                     case EHeroEditorItemPart.Back:
-                        Character4D.UnEquip(Enums.EquipmentPart.Back);
                         break;
                 }
             }
@@ -270,10 +268,8 @@ namespace MultiplayerARPG.HeroEditor4D
                         Character4D.Equip(spriteCollection.Armor.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Leggings, sprite.color);
                         break;
                     case EHeroEditorItemPart.Cape:
-                        Character4D.Equip(spriteCollection.Cape.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Cape, sprite.color);
                         break;
                     case EHeroEditorItemPart.Back:
-                        Character4D.Equip(spriteCollection.Back.Single(i => i.Name == sprite.id), Enums.EquipmentPart.Back, sprite.color);
                         break;
                 }
             }
