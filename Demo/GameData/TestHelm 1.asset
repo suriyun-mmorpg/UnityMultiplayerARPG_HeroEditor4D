@@ -13,33 +13,44 @@ MonoBehaviour:
   m_Name: TestHelm 1
   m_EditorClassIdentifier: 
   id: 
-  title: TestArmor
-  titles: []
-  description: 
-  descriptions: []
+  defaultTitle: TestArmor
+  languageSpecificTitles: []
+  defaultDescription: 
+  languageSpecificDescriptions: []
   category: 
-  icon: {fileID: 21300000, guid: 65291c4e47576a94698d155f4164abe1, type: 3}
-  dropModel: {fileID: 0}
+  icon: {fileID: 21300000, guid: 951903ef9bdbd5043b6ed51d60321ee9, type: 3}
   sellPrice: 0
   weight: 0
   maxStack: 1
   itemRefine: {fileID: 0}
   lockDuration: 0
+  dropModel: {fileID: 0}
   dismantleReturnGold: 0
   dismantleReturnItems: []
+  cashShopItemGeneratingList: []
+  equipmentModels: []
   requirement:
-    character: {fileID: 0}
+    availableClass: {fileID: 0}
+    availableClasses: []
     level: 0
     attributeAmounts: []
   equipmentSet: {fileID: 0}
   maxDurability: 0
   destroyIfBroken: 0
   maxSocket: 0
-  equipmentModels: []
   increaseStats:
     baseStats:
       hp: 0
+      hpRecovery: 0
+      hpLeechRate: 0
       mp: 0
+      mpRecovery: 0
+      mpLeechRate: 0
+      stamina: 0
+      staminaRecovery: 0
+      staminaLeechRate: 0
+      food: 0
+      water: 0
       accuracy: 0
       evasion: 0
       criRate: 0
@@ -50,13 +61,21 @@ MonoBehaviour:
       atkSpeed: 0
       weightLimit: 0
       slotLimit: 0
-      stamina: 0
-      food: 0
-      water: 0
+      goldRate: 0
+      expRate: 0
       testStats: 0
     statsIncreaseEachLevel:
       hp: 0
+      hpRecovery: 0
+      hpLeechRate: 0
       mp: 0
+      mpRecovery: 0
+      mpLeechRate: 0
+      stamina: 0
+      staminaRecovery: 0
+      staminaLeechRate: 0
+      food: 0
+      water: 0
       accuracy: 0
       evasion: 0
       criRate: 0
@@ -67,14 +86,22 @@ MonoBehaviour:
       atkSpeed: 0
       weightLimit: 0
       slotLimit: 0
-      stamina: 0
-      food: 0
-      water: 0
+      goldRate: 0
+      expRate: 0
       testStats: 0
   increaseStatsRate:
     baseStats:
       hp: 0
+      hpRecovery: 0
+      hpLeechRate: 0
       mp: 0
+      mpRecovery: 0
+      mpLeechRate: 0
+      stamina: 0
+      staminaRecovery: 0
+      staminaLeechRate: 0
+      food: 0
+      water: 0
       accuracy: 0
       evasion: 0
       criRate: 0
@@ -85,13 +112,21 @@ MonoBehaviour:
       atkSpeed: 0
       weightLimit: 0
       slotLimit: 0
-      stamina: 0
-      food: 0
-      water: 0
+      goldRate: 0
+      expRate: 0
       testStats: 0
     statsIncreaseEachLevel:
       hp: 0
+      hpRecovery: 0
+      hpLeechRate: 0
       mp: 0
+      mpRecovery: 0
+      mpLeechRate: 0
+      stamina: 0
+      staminaRecovery: 0
+      staminaLeechRate: 0
+      food: 0
+      water: 0
       accuracy: 0
       evasion: 0
       criRate: 0
@@ -102,9 +137,8 @@ MonoBehaviour:
       atkSpeed: 0
       weightLimit: 0
       slotLimit: 0
-      stamina: 0
-      food: 0
-      water: 0
+      goldRate: 0
+      expRate: 0
       testStats: 0
   increaseAttributes: []
   increaseAttributesRate: []
@@ -112,6 +146,158 @@ MonoBehaviour:
   increaseArmors: []
   increaseDamages: []
   increaseSkillLevels: []
+  selfStatusEffectsWhenAttacking: []
+  enemyStatusEffectsWhenAttacking: []
+  selfStatusEffectsWhenAttacked: []
+  enemyStatusEffectsWhenAttacked: []
+  randomBonus:
+    maxRandomStatsAmount: 0
+    randomCharacterStats:
+      minHp: 0
+      maxHp: 0
+      hpApplyRate: 0
+      minHpRecovery: 0
+      maxHpRecovery: 0
+      hpRecoveryApplyRate: 0
+      minHpLeechRate: 0
+      maxHpLeechRate: 0
+      hpLeechRateApplyRate: 0
+      minMp: 0
+      maxMp: 0
+      mpApplyRate: 0
+      minMpRecovery: 0
+      maxMpRecovery: 0
+      mpRecoveryApplyRate: 0
+      minMpLeechRate: 0
+      maxMpLeechRate: 0
+      mpLeechRateApplyRate: 0
+      minStamina: 0
+      maxStamina: 0
+      staminaApplyRate: 0
+      minStaminaRecovery: 0
+      maxStaminaRecovery: 0
+      staminaRecoveryApplyRate: 0
+      minStaminaLeechRate: 0
+      maxStaminaLeechRate: 0
+      staminaLeechRateApplyRate: 0
+      minFood: 0
+      maxFood: 0
+      foodApplyRate: 0
+      minWater: 0
+      maxWater: 0
+      waterApplyRate: 0
+      minAccuracy: 0
+      maxAccuracy: 0
+      accuracyApplyRate: 0
+      minEvasion: 0
+      maxEvasion: 0
+      evasionApplyRate: 0
+      minCriRate: 0
+      maxCriRate: 0
+      criRateApplyRate: 0
+      minCriDmgRate: 0
+      maxCriDmgRate: 0
+      criDmgRateApplyRate: 0
+      minBlockRate: 0
+      maxBlockRate: 0
+      blockRateApplyRate: 0
+      minBlockDmgRate: 0
+      maxBlockDmgRate: 0
+      blockDmgRateApplyRate: 0
+      minMoveSpeed: 0
+      maxMoveSpeed: 0
+      moveSpeedApplyRate: 0
+      minAtkSpeed: 0
+      maxAtkSpeed: 0
+      atkSpeedApplyRate: 0
+      minWeightLimit: 0
+      maxWeightLimit: 0
+      weightLimitApplyRate: 0
+      minSlotLimit: 0
+      maxSlotLimit: 0
+      slotLimitApplyRate: 0
+      minGoldRate: 0
+      maxGoldRate: 0
+      goldRateApplyRate: 0
+      minExpRate: 0
+      maxExpRate: 0
+      expRateApplyRate: 0
+    randomCharacterStatsRate:
+      minHp: 0
+      maxHp: 0
+      hpApplyRate: 0
+      minHpRecovery: 0
+      maxHpRecovery: 0
+      hpRecoveryApplyRate: 0
+      minHpLeechRate: 0
+      maxHpLeechRate: 0
+      hpLeechRateApplyRate: 0
+      minMp: 0
+      maxMp: 0
+      mpApplyRate: 0
+      minMpRecovery: 0
+      maxMpRecovery: 0
+      mpRecoveryApplyRate: 0
+      minMpLeechRate: 0
+      maxMpLeechRate: 0
+      mpLeechRateApplyRate: 0
+      minStamina: 0
+      maxStamina: 0
+      staminaApplyRate: 0
+      minStaminaRecovery: 0
+      maxStaminaRecovery: 0
+      staminaRecoveryApplyRate: 0
+      minStaminaLeechRate: 0
+      maxStaminaLeechRate: 0
+      staminaLeechRateApplyRate: 0
+      minFood: 0
+      maxFood: 0
+      foodApplyRate: 0
+      minWater: 0
+      maxWater: 0
+      waterApplyRate: 0
+      minAccuracy: 0
+      maxAccuracy: 0
+      accuracyApplyRate: 0
+      minEvasion: 0
+      maxEvasion: 0
+      evasionApplyRate: 0
+      minCriRate: 0
+      maxCriRate: 0
+      criRateApplyRate: 0
+      minCriDmgRate: 0
+      maxCriDmgRate: 0
+      criDmgRateApplyRate: 0
+      minBlockRate: 0
+      maxBlockRate: 0
+      blockRateApplyRate: 0
+      minBlockDmgRate: 0
+      maxBlockDmgRate: 0
+      blockDmgRateApplyRate: 0
+      minMoveSpeed: 0
+      maxMoveSpeed: 0
+      moveSpeedApplyRate: 0
+      minAtkSpeed: 0
+      maxAtkSpeed: 0
+      atkSpeedApplyRate: 0
+      minWeightLimit: 0
+      maxWeightLimit: 0
+      weightLimitApplyRate: 0
+      minSlotLimit: 0
+      maxSlotLimit: 0
+      slotLimitApplyRate: 0
+      minGoldRate: 0
+      maxGoldRate: 0
+      goldRateApplyRate: 0
+      minExpRate: 0
+      maxExpRate: 0
+      expRateApplyRate: 0
+    randomAttributeAmounts: []
+    randomAttributeAmountRates: []
+    randomResistanceAmounts: []
+    randomArmorAmounts: []
+    randomDamageAmounts: []
+    randomSkillLevels: []
   armorAmount:
     damageElement: {fileID: 0}
     amount:
@@ -119,7 +305,7 @@ MonoBehaviour:
       amountIncreaseEachLevel: 0
   spriteData:
     part: 2
-    id: Basic/ChampionArmor
+    id: ChampionArmor
     color: {r: 1, g: 1, b: 1, a: 1}
   armorType: {fileID: 11400000, guid: a1143a42e9d328c4988c7b1b33b11451, type: 2}
   equipPosition: Head
