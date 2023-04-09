@@ -1,12 +1,9 @@
-﻿using Assets.HeroEditor4D.Common.CharacterScripts;
-using HeroEditor4D.Common;
-using Enums = HeroEditor4D.Common.Enums;
+﻿using Assets.HeroEditor4D.Common.Scripts.CharacterScripts;
+using Assets.HeroEditor4D.Common.Scripts.Collections;
+using Enums = Assets.HeroEditor4D.Common.Scripts.Enums;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using UnityEngine;
 
 namespace MultiplayerARPG.HeroEditor4D
@@ -80,9 +77,9 @@ namespace MultiplayerARPG.HeroEditor4D
             base.SetDefaultAnimations();
         }
 
-        public override void SetEquipWeapons(EquipWeapons equipWeapons)
+        public override void SetEquipWeapons(IList<EquipWeapons> selectableWeaponSets, byte equipWeaponSet, bool isWeaponsSheathed)
         {
-            base.SetEquipWeapons(equipWeapons);
+            base.SetEquipWeapons(selectableWeaponSets, equipWeaponSet, isWeaponsSheathed);
             SetEquipmentSprites();
         }
 
@@ -99,6 +96,11 @@ namespace MultiplayerARPG.HeroEditor4D
             {
                 items.AddRange(equipItems);
             }
+            EquipWeapons equipWeapons;
+            if (selectableWeaponSets != null && equipWeaponSet >= 0 && equipWeaponSet < selectableWeaponSets.Count)
+                equipWeapons = selectableWeaponSets[equipWeaponSet];
+            else
+                equipWeapons = new EquipWeapons();
             if (equipWeapons != null)
             {
                 items.Add(equipWeapons.leftHand);
@@ -385,6 +387,16 @@ namespace MultiplayerARPG.HeroEditor4D
         {
             animationIndex = 0;
             return GetRightHandAttackAnimation(dataId, animationIndex, out animSpeedRate, out triggerDurations, out totalDuration);
+        }
+
+        public override int GetRightHandAttackRandomMax(int dataId)
+        {
+            return 1;
+        }
+
+        public override int GetLeftHandAttackRandomMax(int dataId)
+        {
+            return 1;
         }
 
         public override bool GetSkillActivateAnimation(int dataId, out float animSpeedRate, out float[] triggerDurations, out float totalDuration)
