@@ -18,15 +18,17 @@ MonoBehaviour:
   defaultDescription: 
   languageSpecificDescriptions: []
   category: 
-  icon: {fileID: 21300000, guid: 4c4730f1ed8db554f9201200c887d8f0, type: 3}
+  icon: {fileID: 21300000, guid: 75812cbf9ac75d644bf1d527c792f75d, type: 3}
   sellPrice: 0
   weight: 0
   maxStack: 1
   itemRefine: {fileID: 0}
   lockDuration: 0
+  expireDuration: 0
   dropModel: {fileID: 0}
   dismantleReturnGold: 0
   dismantleReturnItems: []
+  dismantleReturnCurrencies: []
   cashShopItemGeneratingList: []
   equipmentModels: []
   requirement:
@@ -63,7 +65,8 @@ MonoBehaviour:
       slotLimit: 0
       goldRate: 0
       expRate: 0
-      testStats: 0
+      itemDropRate: 0
+      testStat1: 0
     statsIncreaseEachLevel:
       hp: 0
       hpRecovery: 0
@@ -88,7 +91,9 @@ MonoBehaviour:
       slotLimit: 0
       goldRate: 0
       expRate: 0
-      testStats: 0
+      itemDropRate: 0
+      testStat1: 0
+    statsIncreaseEachLevelByLevels: []
   increaseStatsRate:
     baseStats:
       hp: 0
@@ -114,7 +119,8 @@ MonoBehaviour:
       slotLimit: 0
       goldRate: 0
       expRate: 0
-      testStats: 0
+      itemDropRate: 0
+      testStat1: 0
     statsIncreaseEachLevel:
       hp: 0
       hpRecovery: 0
@@ -139,13 +145,16 @@ MonoBehaviour:
       slotLimit: 0
       goldRate: 0
       expRate: 0
-      testStats: 0
+      itemDropRate: 0
+      testStat1: 0
+    statsIncreaseEachLevelByLevels: []
   increaseAttributes: []
   increaseAttributesRate: []
   increaseResistances: []
   increaseArmors: []
   increaseDamages: []
   increaseSkillLevels: []
+  increaseSkills: []
   selfStatusEffectsWhenAttacking: []
   enemyStatusEffectsWhenAttacking: []
   selfStatusEffectsWhenAttacked: []
@@ -222,6 +231,9 @@ MonoBehaviour:
       minExpRate: 0
       maxExpRate: 0
       expRateApplyRate: 0
+      minItemDropRate: 0
+      maxItemDropRate: 0
+      itemDropRateApplyRate: 0
     randomCharacterStatsRate:
       minHp: 0
       maxHp: 0
@@ -292,6 +304,9 @@ MonoBehaviour:
       minExpRate: 0
       maxExpRate: 0
       expRateApplyRate: 0
+      minItemDropRate: 0
+      maxItemDropRate: 0
+      itemDropRateApplyRate: 0
     randomAttributeAmounts: []
     randomAttributeAmountRates: []
     randomResistanceAmounts: []
@@ -300,9 +315,11 @@ MonoBehaviour:
     randomSkillLevels: []
   spriteData:
     part: 4
-    id: Sword1H
+    id: AdvancedShortSword
     color: {r: 1, g: 1, b: 1, a: 1}
   offHandEquipmentModels: []
+  sheathModels: []
+  offHandSheathModels: []
   weaponType: {fileID: 11400000, guid: 620612cc5db67e8418b3fdcc0fdf8d7a, type: 2}
   damageAmount:
     damageElement: {fileID: 0}
@@ -313,6 +330,7 @@ MonoBehaviour:
       amountIncreaseEachLevel:
         min: 0
         max: 0
+      amountIncreaseEachLevelByLevels: []
   harvestDamageAmount:
     baseAmount:
       min: 0
@@ -320,9 +338,27 @@ MonoBehaviour:
     amountIncreaseEachLevel:
       min: 0
       max: 0
+    amountIncreaseEachLevelByLevels: []
   moveSpeedRateWhileReloading: 1
   moveSpeedRateWhileCharging: 1
   moveSpeedRateWhileAttacking: 0
+  movementRestrictionWhileReloading:
+    jumpRestricted: 0
+    turnRestricted: 0
+  movementRestrictionWhileCharging:
+    jumpRestricted: 0
+    turnRestricted: 0
+  movementRestrictionWhileAttacking:
+    jumpRestricted: 0
+    turnRestricted: 0
+  attackRestriction:
+    restrictedWhileAirborne: 0
+    restrictedWhileCrouching: 0
+    restrictedWhileCrawling: 0
+  reloadRestriction:
+    restrictedWhileAirborne: 0
+    restrictedWhileCrouching: 0
+    restrictedWhileCrawling: 0
   ammoCapacity: 0
   weaponAbility: {fileID: 0}
   crosshairSetting:
@@ -337,11 +373,18 @@ MonoBehaviour:
     recoilY: 0
   launchClip: {fileID: 0}
   launchClips: []
+  launchClipSettings: []
   reloadClip: {fileID: 0}
   reloadClips: []
+  reloadClipSettings: []
+  reloadedClip: {fileID: 0}
+  reloadedClips: []
+  reloadedClipSettings: []
   emptyClip: {fileID: 0}
   emptyClips: []
+  emptyClipSettings: []
   fireType: 0
   fireStagger: {x: 0, y: 0}
   fireSpread: 0
+  chargeDuration: 0
   destroyImmediatelyAfterFired: 0
