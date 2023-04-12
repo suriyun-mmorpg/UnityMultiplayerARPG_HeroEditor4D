@@ -92,13 +92,13 @@ namespace MultiplayerARPG.HeroEditor4D
         private void SetEquipmentSprites()
         {
             List<CharacterItem> items = new List<CharacterItem>();
-            if (equipItems != null)
+            if (EquipItems != null)
             {
-                items.AddRange(equipItems);
+                items.AddRange(EquipItems);
             }
             EquipWeapons equipWeapons;
-            if (selectableWeaponSets != null && equipWeaponSet >= 0 && equipWeaponSet < selectableWeaponSets.Count)
-                equipWeapons = selectableWeaponSets[equipWeaponSet];
+            if (SelectableWeaponSets != null && EquipWeaponSet >= 0 && EquipWeaponSet < SelectableWeaponSets.Count)
+                equipWeapons = SelectableWeaponSets[EquipWeaponSet];
             else
                 equipWeapons = new EquipWeapons();
             if (equipWeapons != null)
@@ -469,7 +469,7 @@ namespace MultiplayerARPG.HeroEditor4D
             if (!Animator.gameObject.activeInHierarchy)
                 return;
 
-            if (isDead)
+            if (IsDead)
             {
                 Animator.SetInteger(ANIM_STATE, (int)StateTypes.Death);
                 return;
@@ -481,12 +481,12 @@ namespace MultiplayerARPG.HeroEditor4D
                 return;
             }
 
-            if (movementState.Has(MovementState.Forward) ||
-                movementState.Has(MovementState.Backward) ||
-                movementState.Has(MovementState.Right) ||
-                movementState.Has(MovementState.Left))
+            if (MovementState.Has(MovementState.Forward) ||
+                MovementState.Has(MovementState.Backward) ||
+                MovementState.Has(MovementState.Right) ||
+                MovementState.Has(MovementState.Left))
             {
-                if (extraMovementState == ExtraMovementState.IsSprinting)
+                if (ExtraMovementState == ExtraMovementState.IsSprinting)
                     Animator.SetInteger(ANIM_STATE, (int)StateTypes.Run);
                 else
                     Animator.SetInteger(ANIM_STATE, (int)StateTypes.Walk);
@@ -497,16 +497,16 @@ namespace MultiplayerARPG.HeroEditor4D
             }
 
             // Update direction
-            if (Mathf.Abs(Mathf.Abs(direction2D.x) - Mathf.Abs(direction2D.y)) < 0.01f)
+            if (Mathf.Abs(Mathf.Abs(Direction2D.x) - Mathf.Abs(Direction2D.y)) < 0.01f)
             {
                 // Up, Down is higher priority
-                Vector2 applyDirection2D = direction2D;
+                Vector2 applyDirection2D = Direction2D;
                 applyDirection2D.x = 0;
-                direction2D = applyDirection2D.normalized;
+                Direction2D = applyDirection2D.normalized;
             }
-            if (Mathf.Abs(direction2D.x) > Mathf.Abs(direction2D.y))
+            if (Mathf.Abs(Direction2D.x) > Mathf.Abs(Direction2D.y))
             {
-                if (direction2D.x > 0)
+                if (Direction2D.x > 0)
                 {
                     Character4D.SetDirection(Vector2.right);
                 }
@@ -517,7 +517,7 @@ namespace MultiplayerARPG.HeroEditor4D
             }
             else
             {
-                if (direction2D.y > 0)
+                if (Direction2D.y > 0)
                 {
                     Character4D.SetDirection(Vector2.up);
                 }
