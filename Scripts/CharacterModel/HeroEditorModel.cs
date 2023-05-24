@@ -77,15 +77,9 @@ namespace MultiplayerARPG.HeroEditor4D
             base.SetDefaultAnimations();
         }
 
-        public override void SetEquipWeapons(IList<EquipWeapons> selectableWeaponSets, byte equipWeaponSet, bool isWeaponsSheathed)
+        public override void SetEquipItems(IList<CharacterItem> equipItems, IList<EquipWeapons> selectableWeaponSets, byte equipWeaponSet, bool isWeaponsSheathed)
         {
-            base.SetEquipWeapons(selectableWeaponSets, equipWeaponSet, isWeaponsSheathed);
-            SetEquipmentSprites();
-        }
-
-        public override void SetEquipItems(IList<CharacterItem> equipItems)
-        {
-            base.SetEquipItems(equipItems);
+            base.SetEquipItems(equipItems, selectableWeaponSets, equipWeaponSet, isWeaponsSheathed);
             SetEquipmentSprites();
         }
 
