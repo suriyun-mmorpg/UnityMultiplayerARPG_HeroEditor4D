@@ -405,8 +405,10 @@ namespace MultiplayerARPG.HeroEditor4D
             return true;
         }
 
-        public override void PlayActionAnimation(AnimActionType animActionType, int dataId, int index, float playSpeedMultiplier = 1f)
+        public override void PlayActionAnimation(AnimActionType animActionType, int dataId, int index, out bool skipMovementValidation, out bool shouldUseRootMotion, float playSpeedMultiplier = 1f)
         {
+            skipMovementValidation = false;
+            shouldUseRootMotion = false;
             StartCoroutine(PlayActionAnimation_Animator(animActionType, dataId, index, playSpeedMultiplier));
         }
 
@@ -424,8 +426,10 @@ namespace MultiplayerARPG.HeroEditor4D
             yield return new WaitForSecondsRealtime(animation.GetExtraDuration() / playSpeedMultiplier);
         }
 
-        public override void PlaySkillCastClip(int dataId, float duration)
+        public override void PlaySkillCastClip(int dataId, float duration, out bool skipMovementValidation, out bool shouldUseRootMotion)
         {
+            skipMovementValidation = false;
+            shouldUseRootMotion = false;
             StartCoroutine(PlaySkillCastClip_Animator(dataId, duration));
         }
 
@@ -437,9 +441,11 @@ namespace MultiplayerARPG.HeroEditor4D
             isCasting = false;
         }
 
-        public override void PlayWeaponChargeClip(int dataId, bool isLeftHand)
+        public override void PlayWeaponChargeClip(int dataId, bool isLeftHand, out bool skipMovementValidation, out bool shouldUseRootMotion)
         {
             // TODO: May implement pulling animation for 2D models
+            skipMovementValidation = false;
+            shouldUseRootMotion = false;
         }
 
         public override void StopActionAnimation()
