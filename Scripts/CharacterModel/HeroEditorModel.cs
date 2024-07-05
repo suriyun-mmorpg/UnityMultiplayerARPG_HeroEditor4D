@@ -95,11 +95,8 @@ namespace MultiplayerARPG.HeroEditor4D
                 equipWeapons = SelectableWeaponSets[EquipWeaponSet];
             else
                 equipWeapons = new EquipWeapons();
-            if (equipWeapons != null)
-            {
-                items.Add(equipWeapons.leftHand);
-                items.Add(equipWeapons.rightHand);
-            }
+            items.Add(equipWeapons.leftHand);
+            items.Add(equipWeapons.rightHand);
             // Clear equipped items
             for (int i = 0; i < (int)EHeroEditorItemPart.Count; ++i)
             {
