@@ -1,4 +1,6 @@
-﻿namespace MultiplayerARPG.HeroEditor4D
+﻿using Insthync.UnityEditorUtils;
+
+namespace MultiplayerARPG.HeroEditor4D
 {
     [System.Serializable]
     public struct HeroEditorSkillAnimation : ISkillAnims

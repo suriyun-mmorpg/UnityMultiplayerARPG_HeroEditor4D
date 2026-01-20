@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Insthync.UnityEditorUtils;
+using Insthync.AudioManager;
 
 namespace MultiplayerARPG.HeroEditor4D
 {
@@ -402,7 +404,7 @@ namespace MultiplayerARPG.HeroEditor4D
             return true;
         }
 
-        public override void PlayActionAnimation(AnimActionType animActionType, int dataId, int index, out bool skipMovementValidation, out bool shouldUseRootMotion, float playSpeedMultiplier = 1f)
+        public override void PlayActionAnimation(AnimActionType animActionType, int dataId, int index, out bool skipMovementValidation, out bool shouldUseRootMotion, float playSpeedMultiplier, float changeClipLength, float overrideClipLength)
         {
             skipMovementValidation = false;
             shouldUseRootMotion = false;
