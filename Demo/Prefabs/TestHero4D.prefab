@@ -1043,15 +1043,15 @@ MonoBehaviour:
   Helmet: {fileID: 0}
   PrimaryWeapon: {fileID: 0}
   SecondaryWeapon: {fileID: 0}
-  Cape: {fileID: 0}
+  Back: {fileID: 0}
   Quiver: {fileID: 0}
-  Backpack: {fileID: 0}
   Shield: []
   Armor: []
   CompositeWeapon: []
   Makeup: {fileID: 0}
   Mask: {fileID: 0}
   Earrings: []
+  Wings: {fileID: 0}
   BodyRenderers:
   - {fileID: 6292599713556759871}
   - {fileID: 6292599714664317787}
@@ -1095,8 +1095,8 @@ MonoBehaviour:
   LeggingsRenderers:
   - {fileID: 6292599714912728346}
   - {fileID: 6292599715149175442}
+  BackRenderer: {fileID: 0}
   QuiverRenderer: {fileID: 6292599714641253055}
-  BackpackRenderer: {fileID: 6292599713921683091}
   ShieldRenderers:
   - {fileID: 6292599714080964386}
   - {fileID: 6292599714825353367}
@@ -1114,13 +1114,12 @@ MonoBehaviour:
   EarringsRenderers:
   - {fileID: 6292599714608837861}
   - {fileID: 6292599715220534534}
+  WingsRenderer: {fileID: 0}
   DefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   EyesPaintMaterial: {fileID: 2100000, guid: 3e78a9b3616c45e5a6cbd9fca765b55f, type: 2}
   EquipmentPaintMaterial: {fileID: 2100000, guid: b67e1036325c49a4a378ba14ec243c30,
     type: 2}
   WeaponType: 2
-  HideEars: 0
-  CropHair: 0
   AnchorBody: {fileID: 6292599714375206999}
   AnchorSword: {fileID: 6292599713569459043}
   AnchorBow: {fileID: 6292599713496655882}
@@ -1128,6 +1127,7 @@ MonoBehaviour:
   LayerManager: {fileID: 6292599714772220700}
   Underwear: []
   UnderwearColor: {r: 0, g: 0, b: 0, a: 0}
+  EquipmentTags: 
   ShowHelmet: 1
 --- !u!114 &6292599714772220700
 MonoBehaviour:
@@ -3273,15 +3273,15 @@ MonoBehaviour:
   Helmet: {fileID: 0}
   PrimaryWeapon: {fileID: 0}
   SecondaryWeapon: {fileID: 0}
-  Cape: {fileID: 0}
+  Back: {fileID: 0}
   Quiver: {fileID: 0}
-  Backpack: {fileID: 0}
   Shield: []
   Armor: []
   CompositeWeapon: []
   Makeup: {fileID: 0}
   Mask: {fileID: 0}
   Earrings: []
+  Wings: {fileID: 0}
   BodyRenderers:
   - {fileID: 315674252359204944}
   - {fileID: 786249145471126665}
@@ -3324,8 +3324,8 @@ MonoBehaviour:
   LeggingsRenderers:
   - {fileID: 6292599715225288799}
   - {fileID: 6292599715386460639}
+  BackRenderer: {fileID: 0}
   QuiverRenderer: {fileID: 1548069884899693841}
-  BackpackRenderer: {fileID: 6292599715138947920}
   ShieldRenderers:
   - {fileID: 1477635796390521948}
   BowRenderers:
@@ -3342,13 +3342,12 @@ MonoBehaviour:
   EarringsRenderers:
   - {fileID: 80863182484830451}
   - {fileID: 989040797683318728}
+  WingsRenderer: {fileID: 0}
   DefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   EyesPaintMaterial: {fileID: 2100000, guid: 3e78a9b3616c45e5a6cbd9fca765b55f, type: 2}
   EquipmentPaintMaterial: {fileID: 2100000, guid: b67e1036325c49a4a378ba14ec243c30,
     type: 2}
   WeaponType: 2
-  HideEars: 0
-  CropHair: 0
   AnchorBody: {fileID: 60425868812236831}
   AnchorSword: {fileID: 1341772662785769602}
   AnchorBow: {fileID: 258200810080397657}
@@ -3356,6 +3355,7 @@ MonoBehaviour:
   LayerManager: {fileID: 6292599713486140007}
   Underwear: []
   UnderwearColor: {r: 0, g: 0, b: 0, a: 0}
+  EquipmentTags: 
   ShowHelmet: 1
 --- !u!114 &6292599713486140007
 MonoBehaviour:
@@ -18934,15 +18934,15 @@ MonoBehaviour:
   Helmet: {fileID: 0}
   PrimaryWeapon: {fileID: 0}
   SecondaryWeapon: {fileID: 0}
-  Cape: {fileID: 0}
+  Back: {fileID: 0}
   Quiver: {fileID: 0}
-  Backpack: {fileID: 0}
   Shield: []
   Armor: []
   CompositeWeapon: []
   Makeup: {fileID: 0}
   Mask: {fileID: 0}
   Earrings: []
+  Wings: {fileID: 0}
   BodyRenderers:
   - {fileID: 6292599714553410708}
   - {fileID: 6292599714764779574}
@@ -18986,8 +18986,8 @@ MonoBehaviour:
   LeggingsRenderers:
   - {fileID: 6292599713737131180}
   - {fileID: 6292599713512823789}
+  BackRenderer: {fileID: 0}
   QuiverRenderer: {fileID: 6292599715382713540}
-  BackpackRenderer: {fileID: 6292599714154042259}
   ShieldRenderers:
   - {fileID: 6292599715400716778}
   - {fileID: 2739425020314434511}
@@ -19005,13 +19005,12 @@ MonoBehaviour:
   EarringsRenderers:
   - {fileID: 6292599713736795503}
   - {fileID: 6292599713501569724}
+  WingsRenderer: {fileID: 0}
   DefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   EyesPaintMaterial: {fileID: 2100000, guid: 3e78a9b3616c45e5a6cbd9fca765b55f, type: 2}
   EquipmentPaintMaterial: {fileID: 2100000, guid: b67e1036325c49a4a378ba14ec243c30,
     type: 2}
   WeaponType: 2
-  HideEars: 0
-  CropHair: 0
   AnchorBody: {fileID: 6292599714138149032}
   AnchorSword: {fileID: 6292599713422111355}
   AnchorBow: {fileID: 6292599714007435832}
@@ -19019,6 +19018,7 @@ MonoBehaviour:
   LayerManager: {fileID: 6292599714968941004}
   Underwear: []
   UnderwearColor: {r: 0, g: 0, b: 0, a: 0}
+  EquipmentTags: 
   ShowHelmet: 1
 --- !u!114 &6292599714968941004
 MonoBehaviour:
@@ -19437,15 +19437,15 @@ MonoBehaviour:
   Helmet: {fileID: 0}
   PrimaryWeapon: {fileID: 0}
   SecondaryWeapon: {fileID: 0}
-  Cape: {fileID: 0}
+  Back: {fileID: 0}
   Quiver: {fileID: 0}
-  Backpack: {fileID: 0}
   Shield: []
   Armor: []
   CompositeWeapon: []
   Makeup: {fileID: 0}
   Mask: {fileID: 0}
   Earrings: []
+  Wings: {fileID: 0}
   BodyRenderers:
   - {fileID: 6292599713973754202}
   - {fileID: 6292599715109826750}
@@ -19490,8 +19490,8 @@ MonoBehaviour:
   LeggingsRenderers:
   - {fileID: 6292599714848741762}
   - {fileID: 6292599714479213262}
+  BackRenderer: {fileID: 0}
   QuiverRenderer: {fileID: 6292599714923773681}
-  BackpackRenderer: {fileID: 6292599715248061858}
   ShieldRenderers:
   - {fileID: 6292599714952217164}
   BowRenderers:
@@ -19508,13 +19508,12 @@ MonoBehaviour:
   EarringsRenderers:
   - {fileID: 6292599715352562663}
   - {fileID: 6292599714132527084}
+  WingsRenderer: {fileID: 0}
   DefaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   EyesPaintMaterial: {fileID: 2100000, guid: 3e78a9b3616c45e5a6cbd9fca765b55f, type: 2}
   EquipmentPaintMaterial: {fileID: 2100000, guid: b67e1036325c49a4a378ba14ec243c30,
     type: 2}
   WeaponType: 2
-  HideEars: 0
-  CropHair: 0
   AnchorBody: {fileID: 6292599714247119021}
   AnchorSword: {fileID: 6292599715249086621}
   AnchorBow: {fileID: 6292599713907407050}
@@ -19522,6 +19521,7 @@ MonoBehaviour:
   LayerManager: {fileID: 6292599714260087197}
   Underwear: []
   UnderwearColor: {r: 0, g: 0, b: 0, a: 0}
+  EquipmentTags: 
   ShowHelmet: 1
 --- !u!114 &6292599714260087197
 MonoBehaviour:
