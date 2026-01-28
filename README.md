@@ -13,3 +13,11 @@ You can set default sprites which will appear when a character has no equipping 
 You can set equipping item sprite in item data -> `Sprite Data` field
 
 ![](./ScreenShots/ItemDataInspector.png)
+
+## Where is sprite data's ID pulled from
+
+It come from sprite collection, you can find which sprite collection that the character model is using from character model component (HeroEditorModel)
+
+![](./ScreenShots/IDLocation1.png)
+
+![](./ScreenShots/IDLocation2.png)
